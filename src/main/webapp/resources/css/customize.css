@@ -1,0 +1,89 @@
+.text-center{
+	text-align : center;
+}
+.version{
+	text-align : center;
+}
+.errMsg, .font-red{
+	color : red;
+}
+
+.ui-select .ui-btn select{
+	background: #ffffff;
+}
+
+font-bold{
+	font-weight: bold;
+}
+
+.btn-primary {
+	color: #fff !important;
+	background-color: #428bca !important;
+	border-color: #357ebd !important;
+	text-shadow: none !important;
+}
+
+.btn-success {
+	color: #fff !important;
+	background-color: #5cb85c !important;
+	border-color: #4cae4c !important;
+	text-shadow: none !important;
+}
+
+.btn-info {
+	color: #fff !important;
+	background-color: #5bc0de !important;
+	border-color: #46b8da !important;
+	text-shadow: none !important;
+}
+
+.btn-danger {
+	color: #fff !important;
+	background-color: #d9534f !important;
+	border-color: #d43f3a !important;
+	text-shadow: none !important;
+}
+
+.text-left {
+	text-align: left;
+}
+
+.text-right {
+	text-align: right;
+}
+
+.width80{
+	width : 80%
+}
+
+.width20{
+	width : 20%
+}
+
+#sales-order-list li.focus {
+	background: #ededed;
+	border-color: #ddd;
+	color: #333;
+	text-shadow: 0 1px 0 #f3f3f3;
+}
+
+#sales-order-list li .action-block {
+	display: none;
+}
+
+#sales-order-list li.focus .action-block {
+	display: block !important;
+}
+
+.status-txt {
+	color: #777 !important;	
+}
+
+.cancel-txt {
+	color: #F00 !important;	
+}
+
+#deleteDialog a, #cancelDialog a {
+	font-size: 1.1em !important;
+	font-weight: normal !important;
+}
