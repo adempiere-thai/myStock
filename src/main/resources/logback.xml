@@ -23,8 +23,7 @@
 
 	</appender>
 
-	<logger name="th.co.cenos" level="debug"
-		additivity="false">
+	<logger name="th.co.cenos" level="DEBUG" additivity="false">
 		<appender-ref ref="FILE-AUDIT" />
 	</logger>
 

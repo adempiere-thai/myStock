@@ -11,6 +11,18 @@
 
 	<context:component-scan base-package="th.co.cenos" />
 
+	<mvc:interceptors>
+		<bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor" />
+		<mvc:interceptor>
+			<mvc:mapping path="/**"/>
+			<mvc:exclude-mapping path="/resources/**"/>
+			<mvc:exclude-mapping path="/login**"/>
+			<ref bean="authenFilter" />
+		</mvc:interceptor>
+	</mvc:interceptors>
+
+	<bean id="authenFilter" class="th.co.cenos.web.AuthenticationInterceptor" />
+
 	<bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix">

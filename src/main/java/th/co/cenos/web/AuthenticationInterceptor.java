@@ -14,44 +14,40 @@
  * ComPiere, Inc., 2620 Augustine Dr. #245, Santa Clara, CA 95054, USA        *
  * or via info@compiere.org or http://www.compiere.org/license.html           *
  *****************************************************************************/
-package th.co.cenos.controller;
+package th.co.cenos.web;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
+import th.co.cenos.model.User;
 
 /**
  * @function myStock
- * @package th.co.cenos.controller
- * @classname HelloController
+ * @package th.co.cenos.aop
+ * @classname AuthenticationInterceptor
  * @author Pasuwat Wang (CENS ONLINE SERVICES)
- * @created Nov 15, 2016 12:21:11 PM
+ * @created Nov 16, 2016 9:41:01 AM
  */
-@Controller
-public class HelloController {
-	
-	private static final Logger logger = LoggerFactory.getLogger(HelloController.class);
+public class AuthenticationInterceptor extends HandlerInterceptorAdapter {
+	private static final Logger logger = LoggerFactory
+			.getLogger(AuthenticationInterceptor.class);
 
-	@RequestMapping(value = "/hello/{name:.+}", method = RequestMethod.GET)
-	public ModelAndView hello(@PathVariable("name") String name , HttpServletRequest request) {
+	// before the actual handler will be executed
+	public boolean preHandle(HttpServletRequest request,
+			HttpServletResponse response, Object handler) throws Exception {
+
+		logger.info(request.getRequestURI());
+
+		User userData = (User) request.getSession().getAttribute(WebSession._USER);
+		if (userData == null) {
+			response.sendRedirect(request.getContextPath()+"/login.jsp");
+			return false;
+		}
 		
-		logger.debug("hello() is executed, value {}", "mkyong");
-
-
-		ModelAndView model = new ModelAndView();
-		model.setViewName("hello");
-		model.addObject("msg", name);
-
-		return model;
-
+		return true;
 	}
-
 }

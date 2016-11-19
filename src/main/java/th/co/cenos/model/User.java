@@ -14,44 +14,63 @@
  * ComPiere, Inc., 2620 Augustine Dr. #245, Santa Clara, CA 95054, USA        *
  * or via info@compiere.org or http://www.compiere.org/license.html           *
  *****************************************************************************/
-package th.co.cenos.controller;
+package th.co.cenos.model;
 
-import javax.servlet.http.HttpServletRequest;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
+import java.io.Serializable;
 
 /**
  * @function myStock
- * @package th.co.cenos.controller
- * @classname HelloController
+ * @package th.co.cenos.model
+ * @classname User
  * @author Pasuwat Wang (CENS ONLINE SERVICES)
- * @created Nov 15, 2016 12:21:11 PM
+ * @created Nov 16, 2016 9:52:09 AM
  */
-@Controller
-public class HelloController {
+public class User implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2124957273604300791L;
 	
-	private static final Logger logger = LoggerFactory.getLogger(HelloController.class);
-
-	@RequestMapping(value = "/hello/{name:.+}", method = RequestMethod.GET)
-	public ModelAndView hello(@PathVariable("name") String name , HttpServletRequest request) {
-		
-		logger.debug("hello() is executed, value {}", "mkyong");
-
-
-		ModelAndView model = new ModelAndView();
-		model.setViewName("hello");
-		model.addObject("msg", name);
-
-		return model;
-
+	private String userId ;
+	private String username ;
+	private String pwd;
+	
+	/**
+	 * @return the userId
+	 */
+	public String getUserId() {
+		return userId;
+	}
+	/**
+	 * @param userId the userId to set
+	 */
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+	/**
+	 * @return the username
+	 */
+	public String getUsername() {
+		return username;
+	}
+	/**
+	 * @param username the username to set
+	 */
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	/**
+	 * @return the pwd
+	 */
+	public String getPwd() {
+		return pwd;
+	}
+	/**
+	 * @param pwd the pwd to set
+	 */
+	public void setPwd(String pwd) {
+		this.pwd = pwd;
 	}
 
 }

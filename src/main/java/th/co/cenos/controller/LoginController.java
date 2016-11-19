@@ -16,42 +16,36 @@
  *****************************************************************************/
 package th.co.cenos.controller;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * @function myStock
  * @package th.co.cenos.controller
- * @classname HelloController
+ * @classname LoginController
  * @author Pasuwat Wang (CENS ONLINE SERVICES)
- * @created Nov 15, 2016 12:21:11 PM
+ * @created Nov 16, 2016 10:42:48 AM
  */
 @Controller
-public class HelloController {
+public class LoginController {
 	
-	private static final Logger logger = LoggerFactory.getLogger(HelloController.class);
-
-	@RequestMapping(value = "/hello/{name:.+}", method = RequestMethod.GET)
-	public ModelAndView hello(@PathVariable("name") String name , HttpServletRequest request) {
+	private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
+	
+	@RequestMapping(value = "/", method = RequestMethod.GET)
+	public String showLogin() {
+		logger.debug("Login page");
+		return "login";
+	}
+	
+	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	public String login(@RequestParam("userId") String userId , @RequestParam("pwd") String pwd) {
+		logger.debug(String.format("Login Username : %s Password : %s", userId , pwd));
 		
-		logger.debug("hello() is executed, value {}", "mkyong");
-
-
-		ModelAndView model = new ModelAndView();
-		model.setViewName("hello");
-		model.addObject("msg", name);
-
-		return model;
-
+		return "login";
 	}
 
 }

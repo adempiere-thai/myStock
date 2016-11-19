@@ -14,44 +14,16 @@
  * ComPiere, Inc., 2620 Augustine Dr. #245, Santa Clara, CA 95054, USA        *
  * or via info@compiere.org or http://www.compiere.org/license.html           *
  *****************************************************************************/
-package th.co.cenos.controller;
-
-import javax.servlet.http.HttpServletRequest;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
+package th.co.cenos.web;
 
 /**
  * @function myStock
- * @package th.co.cenos.controller
- * @classname HelloController
+ * @package th.co.cenos.web
+ * @classname WebSession
  * @author Pasuwat Wang (CENS ONLINE SERVICES)
- * @created Nov 15, 2016 12:21:11 PM
+ * @created Nov 16, 2016 9:49:58 AM
  */
-@Controller
-public class HelloController {
+public class WebSession {
+	public static final String _USER = "S_USER";
 	
-	private static final Logger logger = LoggerFactory.getLogger(HelloController.class);
-
-	@RequestMapping(value = "/hello/{name:.+}", method = RequestMethod.GET)
-	public ModelAndView hello(@PathVariable("name") String name , HttpServletRequest request) {
-		
-		logger.debug("hello() is executed, value {}", "mkyong");
-
-
-		ModelAndView model = new ModelAndView();
-		model.setViewName("hello");
-		model.addObject("msg", name);
-
-		return model;
-
-	}
-
 }
