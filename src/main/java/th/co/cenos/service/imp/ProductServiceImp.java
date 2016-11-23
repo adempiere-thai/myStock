@@ -14,77 +14,43 @@
  * ComPiere, Inc., 2620 Augustine Dr. #245, Santa Clara, CA 95054, USA        *
  * or via info@compiere.org or http://www.compiere.org/license.html           *
  *****************************************************************************/
-package th.co.cenos.model;
+package th.co.cenos.service.imp;
 
-import java.io.Serializable;
 import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import th.co.cenos.dao.ProductDao;
+import th.co.cenos.model.Product;
+import th.co.cenos.services.ProductService;
 
 /**
  * @function myStock
- * @package th.co.cenos.model
- * @classname Warehouse
+ * @package th.co.cenos.service.imp
+ * @classname ProductServiceImp
  * @author Pasuwat Wang (CENS ONLINE SERVICES)
- * @created Nov 16, 2016 3:52:36 PM
+ * @created Nov 23, 2016 3:17:03 PM
  */
-public class Warehouse implements Serializable {
+@Service
+@Transactional
+public class ProductServiceImp implements ProductService {
+	
+	@Autowired
+	ProductDao productDao;
+	
+	@Override
+	public List<Product> getProductList(int adClientId, int mWarehouseId,
+			String srhKey) {
+		// TODO Auto-generated method stub
+		return productDao.getProductList(adClientId, mWarehouseId, srhKey);
+	}
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -1936356748911194167L;
-	
-	private int adOrgId;
-	private int warehouseId ;
-	private String warehouseName;
-	
-	private List<Locator> locatorL;
-	/**
-	 * @return the adOrgId
-	 */
-	public int getAdOrgId() {
-		return adOrgId;
+	@Override
+	public Product getProductById(int productId) {
+		// TODO Auto-generated method stub
+		return productDao.getProductById(productId);
 	}
-	/**
-	 * @param adOrgId the adOrgId to set
-	 */
-	public void setAdOrgId(int adOrgId) {
-		this.adOrgId = adOrgId;
-	}
-	/**
-	 * @return the warehouseId
-	 */
-	public int getWarehouseId() {
-		return warehouseId;
-	}
-	/**
-	 * @param warehouseId the warehouseId to set
-	 */
-	public void setWarehouseId(int warehouseId) {
-		this.warehouseId = warehouseId;
-	}
-	/**
-	 * @return the warehouseName
-	 */
-	public String getWarehouseName() {
-		return warehouseName;
-	}
-	/**
-	 * @param warehouseName the warehouseName to set
-	 */
-	public void setWarehouseName(String warehouseName) {
-		this.warehouseName = warehouseName;
-	}
-	/**
-	 * @return the locatorL
-	 */
-	public List<Locator> getLocatorL() {
-		return locatorL;
-	}
-	/**
-	 * @param locatorL the locatorL to set
-	 */
-	public void setLocatorL(List<Locator> locatorL) {
-		this.locatorL = locatorL;
-	}
-	 
+
 }

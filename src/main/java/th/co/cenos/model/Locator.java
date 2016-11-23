@@ -17,74 +17,46 @@
 package th.co.cenos.model;
 
 import java.io.Serializable;
-import java.util.List;
 
 /**
  * @function myStock
  * @package th.co.cenos.model
- * @classname Warehouse
+ * @classname Locator
  * @author Pasuwat Wang (CENS ONLINE SERVICES)
- * @created Nov 16, 2016 3:52:36 PM
+ * @created Nov 21, 2016 11:37:15 AM
  */
-public class Warehouse implements Serializable {
-
+public class Locator implements Serializable {
+	
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -1936356748911194167L;
+	private static final long serialVersionUID = 2647231016198765055L;
 	
-	private int adOrgId;
-	private int warehouseId ;
-	private String warehouseName;
+	private int locatorId ;
 	
-	private List<Locator> locatorL;
-	/**
-	 * @return the adOrgId
-	 */
-	public int getAdOrgId() {
-		return adOrgId;
+	private String locatorKey;
+	private boolean isDefault;
+	
+	
+	public int getLocatorId() {
+		return locatorId;
 	}
-	/**
-	 * @param adOrgId the adOrgId to set
-	 */
-	public void setAdOrgId(int adOrgId) {
-		this.adOrgId = adOrgId;
+	public void setLocatorId(int locatorId) {
+		this.locatorId = locatorId;
 	}
-	/**
-	 * @return the warehouseId
-	 */
-	public int getWarehouseId() {
-		return warehouseId;
+	public String getLocatorKey() {
+		return locatorKey;
 	}
-	/**
-	 * @param warehouseId the warehouseId to set
-	 */
-	public void setWarehouseId(int warehouseId) {
-		this.warehouseId = warehouseId;
+	public void setLocatorKey(String locatorKey) {
+		this.locatorKey = locatorKey;
 	}
-	/**
-	 * @return the warehouseName
-	 */
-	public String getWarehouseName() {
-		return warehouseName;
+
+	public boolean isDefault() {
+		return isDefault;
 	}
-	/**
-	 * @param warehouseName the warehouseName to set
-	 */
-	public void setWarehouseName(String warehouseName) {
-		this.warehouseName = warehouseName;
+	
+	public void setDefault(boolean isDefault) {
+		this.isDefault = isDefault;
 	}
-	/**
-	 * @return the locatorL
-	 */
-	public List<Locator> getLocatorL() {
-		return locatorL;
-	}
-	/**
-	 * @param locatorL the locatorL to set
-	 */
-	public void setLocatorL(List<Locator> locatorL) {
-		this.locatorL = locatorL;
-	}
-	 
+	
 }

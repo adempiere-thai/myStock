@@ -14,77 +14,23 @@
  * ComPiere, Inc., 2620 Augustine Dr. #245, Santa Clara, CA 95054, USA        *
  * or via info@compiere.org or http://www.compiere.org/license.html           *
  *****************************************************************************/
-package th.co.cenos.model;
+package th.co.cenos.adempiere.imp;
 
-import java.io.Serializable;
-import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import th.co.cenos.adempiere.AdempiereService;
 
 /**
  * @function myStock
- * @package th.co.cenos.model
- * @classname Warehouse
+ * @package th.co.cenos.adempiere.imp
+ * @classname AdempiereServiceImp
  * @author Pasuwat Wang (CENS ONLINE SERVICES)
- * @created Nov 16, 2016 3:52:36 PM
+ * @created Nov 20, 2016 4:18:04 PM
  */
-public class Warehouse implements Serializable {
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -1936356748911194167L;
+public class AdempiereServiceImp implements AdempiereService {
+	private Logger	logger = LoggerFactory.getLogger(AdempiereServiceImp.class);
 	
-	private int adOrgId;
-	private int warehouseId ;
-	private String warehouseName;
 	
-	private List<Locator> locatorL;
-	/**
-	 * @return the adOrgId
-	 */
-	public int getAdOrgId() {
-		return adOrgId;
-	}
-	/**
-	 * @param adOrgId the adOrgId to set
-	 */
-	public void setAdOrgId(int adOrgId) {
-		this.adOrgId = adOrgId;
-	}
-	/**
-	 * @return the warehouseId
-	 */
-	public int getWarehouseId() {
-		return warehouseId;
-	}
-	/**
-	 * @param warehouseId the warehouseId to set
-	 */
-	public void setWarehouseId(int warehouseId) {
-		this.warehouseId = warehouseId;
-	}
-	/**
-	 * @return the warehouseName
-	 */
-	public String getWarehouseName() {
-		return warehouseName;
-	}
-	/**
-	 * @param warehouseName the warehouseName to set
-	 */
-	public void setWarehouseName(String warehouseName) {
-		this.warehouseName = warehouseName;
-	}
-	/**
-	 * @return the locatorL
-	 */
-	public List<Locator> getLocatorL() {
-		return locatorL;
-	}
-	/**
-	 * @param locatorL the locatorL to set
-	 */
-	public void setLocatorL(List<Locator> locatorL) {
-		this.locatorL = locatorL;
-	}
-	 
+	
 }

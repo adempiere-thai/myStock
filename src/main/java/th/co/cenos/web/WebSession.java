@@ -16,6 +16,11 @@
  *****************************************************************************/
 package th.co.cenos.web;
 
+import javax.servlet.http.HttpServletRequest;
+
+import th.co.cenos.model.User;
+import th.co.cenos.model.Warehouse;
+
 /**
  * @function myStock
  * @package th.co.cenos.web
@@ -24,6 +29,25 @@ package th.co.cenos.web;
  * @created Nov 16, 2016 9:49:58 AM
  */
 public class WebSession {
-	public static final String _USER = "S_USER";
+	public static final String _LOGIN_USER = "LOGIN_USER";
+	public static final String _DEFAULT_WAREHOUSE = "DEFAULT_WAREHOUSE";
+	
+	public static User getLoginUser(HttpServletRequest request){
+		User user = null;
+		
+		if(request.getSession().getAttribute(_LOGIN_USER)!=null)
+			user = (User)request.getSession().getAttribute(_LOGIN_USER) ;
+		
+		return user;
+	}
+	
+	public static Warehouse getDefaultWarehouse(HttpServletRequest request){
+		Warehouse warehouse = null;
+		
+		if(request.getSession().getAttribute(_DEFAULT_WAREHOUSE)!=null)
+			warehouse = (Warehouse)request.getSession().getAttribute(_DEFAULT_WAREHOUSE) ;
+		
+		return warehouse;
+	}
 	
 }

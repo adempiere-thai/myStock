@@ -17,6 +17,7 @@
 package th.co.cenos.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * @function myStock
@@ -32,21 +33,36 @@ public class User implements Serializable {
 	 */
 	private static final long serialVersionUID = 2124957273604300791L;
 	
-	private String userId ;
+	private int adClientId;
+	private int userId ;
 	private String username ;
 	private String pwd;
+	
+	private List<Warehouse> warehouseL;
 	
 	/**
 	 * @return the userId
 	 */
-	public String getUserId() {
+	public int getUserId() {
 		return userId;
 	}
 	/**
 	 * @param userId the userId to set
 	 */
-	public void setUserId(String userId) {
+	public void setUserId(int userId) {
 		this.userId = userId;
+	}
+	/**
+	 * @return the adClientId
+	 */
+	public int getAdClientId() {
+		return adClientId;
+	}
+	/**
+	 * @param adClientId the adClientId to set
+	 */
+	public void setAdClientId(int adClientId) {
+		this.adClientId = adClientId;
 	}
 	/**
 	 * @return the username
@@ -71,6 +87,18 @@ public class User implements Serializable {
 	 */
 	public void setPwd(String pwd) {
 		this.pwd = pwd;
+	}
+	/**
+	 * @return the warehouseL
+	 */
+	public List<Warehouse> getWarehouseL() {
+		return warehouseL;
+	}
+	/**
+	 * @param warehouseL the warehouseL to set
+	 */
+	public void setWarehouseL(List<Warehouse> warehouseL) {
+		this.warehouseL = warehouseL;
 	}
 
 }

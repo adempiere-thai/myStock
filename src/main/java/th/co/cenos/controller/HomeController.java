@@ -14,44 +14,53 @@
  * ComPiere, Inc., 2620 Augustine Dr. #245, Santa Clara, CA 95054, USA        *
  * or via info@compiere.org or http://www.compiere.org/license.html           *
  *****************************************************************************/
-package th.co.cenos.web;
+package th.co.cenos.controller;
+
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import th.co.cenos.model.User;
+import th.co.cenos.model.Menu;
+import th.co.cenos.services.SecurityService;
+import th.co.cenos.web.WebSession;
 
 /**
  * @function myStock
- * @package th.co.cenos.aop
- * @classname AuthenticationInterceptor
+ * @package th.co.cenos.controller
+ * @classname LoginController
  * @author Pasuwat Wang (CENS ONLINE SERVICES)
- * @created Nov 16, 2016 9:41:01 AM
+ * @created Nov 16, 2016 10:42:48 AM
  */
-public class AuthenticationInterceptor extends HandlerInterceptorAdapter {
-	private static final Logger logger = LoggerFactory
-			.getLogger(AuthenticationInterceptor.class);
-
-	// before the actual handler will be executed
-	public boolean preHandle(HttpServletRequest request,
-			HttpServletResponse response, Object handler) throws Exception {
-
-		logger.info(request.getRequestURI());
-
-		User loginData = (User) request.getSession().getAttribute(WebSession._LOGIN_USER);
-		if (loginData == null) {
-			response.sendRedirect(request.getContextPath()+"/login.jsp");
-			return false;
-		}
+@Controller
+public class HomeController {
+	
+	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
+	
+	@Autowired
+	SecurityService securityService;
+	
+	@RequestMapping(value = "/home", method = RequestMethod.GET)
+	public ModelAndView showHomePage(HttpServletRequest request) {
+		ModelAndView model = new ModelAndView();
+		List<Menu> menuL = securityService.getMenu(WebSession.getLoginUser(request));
 		
-		response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
-		response.setHeader("Pragma", "no-cache"); // HTTP 1.0.
-		response.setDateHeader("Expires", 0); // Proxies.
+		model.setViewName("home");
+		model.addObject("menuL",menuL);
+		model.addObject("warehouse", WebSession.getDefaultWarehouse(request));
 		
-		return true;
+		return model;
 	}
+
 }

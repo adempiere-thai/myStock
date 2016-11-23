@@ -9,16 +9,23 @@
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context-3.2.xsd">
 
-	<bean id="dbProperties"
+	<bean id="configure"
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-		<property name="location">
-			<value>classpath:db.properties</value>
+		<property name="locations">
+			<list>
+				<value>classpath:db.properties</value>
+			</list>
 		</property>
 	</bean>
 
 	<bean id="messageSource"
 		class="org.springframework.context.support.ResourceBundleMessageSource">
-		<property name="basename" value="myStock" />
+		<property name="basenames">
+	    <list>
+	      <value>messages</value>
+	      <value>errors</value>
+	    </list>
+	  	</property>
 	</bean>
 
 	<bean id="dataSource"

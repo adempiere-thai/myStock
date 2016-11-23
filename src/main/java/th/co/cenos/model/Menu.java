@@ -22,69 +22,33 @@ import java.util.List;
 /**
  * @function myStock
  * @package th.co.cenos.model
- * @classname Warehouse
+ * @classname User
  * @author Pasuwat Wang (CENS ONLINE SERVICES)
- * @created Nov 16, 2016 3:52:36 PM
+ * @created Nov 16, 2016 9:52:09 AM
  */
-public class Warehouse implements Serializable {
+public class Menu implements Serializable {
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -1936356748911194167L;
-	
-	private int adOrgId;
-	private int warehouseId ;
-	private String warehouseName;
-	
-	private List<Locator> locatorL;
-	/**
-	 * @return the adOrgId
-	 */
-	public int getAdOrgId() {
-		return adOrgId;
+	private static final long serialVersionUID = -3387951778453200780L;
+
+	private String menuName;
+	private String url;
+
+	public String getMenuName() {
+		return menuName;
 	}
-	/**
-	 * @param adOrgId the adOrgId to set
-	 */
-	public void setAdOrgId(int adOrgId) {
-		this.adOrgId = adOrgId;
+
+	public void setMenuName(String menuName) {
+		this.menuName = menuName;
 	}
-	/**
-	 * @return the warehouseId
-	 */
-	public int getWarehouseId() {
-		return warehouseId;
+
+	public String getUrl() {
+		return url;
 	}
-	/**
-	 * @param warehouseId the warehouseId to set
-	 */
-	public void setWarehouseId(int warehouseId) {
-		this.warehouseId = warehouseId;
+
+	public void setUrl(String url) {
+		this.url = url;
 	}
-	/**
-	 * @return the warehouseName
-	 */
-	public String getWarehouseName() {
-		return warehouseName;
-	}
-	/**
-	 * @param warehouseName the warehouseName to set
-	 */
-	public void setWarehouseName(String warehouseName) {
-		this.warehouseName = warehouseName;
-	}
-	/**
-	 * @return the locatorL
-	 */
-	public List<Locator> getLocatorL() {
-		return locatorL;
-	}
-	/**
-	 * @param locatorL the locatorL to set
-	 */
-	public void setLocatorL(List<Locator> locatorL) {
-		this.locatorL = locatorL;
-	}
-	 
 }

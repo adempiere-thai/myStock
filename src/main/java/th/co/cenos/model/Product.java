@@ -17,74 +17,73 @@
 package th.co.cenos.model;
 
 import java.io.Serializable;
-import java.util.List;
+import java.math.BigDecimal;
 
 /**
  * @function myStock
  * @package th.co.cenos.model
- * @classname Warehouse
+ * @classname User
  * @author Pasuwat Wang (CENS ONLINE SERVICES)
- * @created Nov 16, 2016 3:52:36 PM
+ * @created Nov 16, 2016 9:52:09 AM
  */
-public class Warehouse implements Serializable {
+public class Product implements Serializable {
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -1936356748911194167L;
+	private static final long serialVersionUID = 1658083259767193902L;
+
+	private int productId ;
+	private String productSrhKey;
+	private String productName;
 	
-	private int adOrgId;
-	private int warehouseId ;
-	private String warehouseName;
+	private BigDecimal availableQty;
+	private BigDecimal orderQty;
+	private BigDecimal reservedQty;
+	private BigDecimal onhandQty;
+
+	public int getProductId() {
+		return productId;
+	}
+	public void setProductId(int productId) {
+		this.productId = productId;
+	}
 	
-	private List<Locator> locatorL;
-	/**
-	 * @return the adOrgId
-	 */
-	public int getAdOrgId() {
-		return adOrgId;
+	public String getProductSrhKey() {
+		return productSrhKey;
 	}
-	/**
-	 * @param adOrgId the adOrgId to set
-	 */
-	public void setAdOrgId(int adOrgId) {
-		this.adOrgId = adOrgId;
+	public void setProductSrhKey(String productSrhKey) {
+		this.productSrhKey = productSrhKey;
 	}
-	/**
-	 * @return the warehouseId
-	 */
-	public int getWarehouseId() {
-		return warehouseId;
+	
+	public String getProductName() {
+		return productName;
 	}
-	/**
-	 * @param warehouseId the warehouseId to set
-	 */
-	public void setWarehouseId(int warehouseId) {
-		this.warehouseId = warehouseId;
+	public void setProductName(String productName) {
+		this.productName = productName;
 	}
-	/**
-	 * @return the warehouseName
-	 */
-	public String getWarehouseName() {
-		return warehouseName;
+	public BigDecimal getAvailableQty() {
+		return availableQty;
 	}
-	/**
-	 * @param warehouseName the warehouseName to set
-	 */
-	public void setWarehouseName(String warehouseName) {
-		this.warehouseName = warehouseName;
+	public void setAvailableQty(BigDecimal availableQty) {
+		this.availableQty = availableQty;
 	}
-	/**
-	 * @return the locatorL
-	 */
-	public List<Locator> getLocatorL() {
-		return locatorL;
+	public BigDecimal getOrderQty() {
+		return orderQty;
 	}
-	/**
-	 * @param locatorL the locatorL to set
-	 */
-	public void setLocatorL(List<Locator> locatorL) {
-		this.locatorL = locatorL;
+	public void setOrderQty(BigDecimal orderQty) {
+		this.orderQty = orderQty;
 	}
-	 
+	public BigDecimal getReservedQty() {
+		return reservedQty;
+	}
+	public void setReservedQty(BigDecimal reservedQty) {
+		this.reservedQty = reservedQty;
+	}
+	public BigDecimal getOnhandQty() {
+		return onhandQty;
+	}
+	public void setOnhandQty(BigDecimal onhandQty) {
+		this.onhandQty = onhandQty;
+	}
 }

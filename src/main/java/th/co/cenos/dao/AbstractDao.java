@@ -14,77 +14,60 @@
  * ComPiere, Inc., 2620 Augustine Dr. #245, Santa Clara, CA 95054, USA        *
  * or via info@compiere.org or http://www.compiere.org/license.html           *
  *****************************************************************************/
-package th.co.cenos.model;
+package th.co.cenos.dao;
 
-import java.io.Serializable;
-import java.util.List;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import javax.sql.DataSource;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import th.co.cenos.exceptions.NoDatasourceException;
 
 /**
  * @function myStock
- * @package th.co.cenos.model
- * @classname Warehouse
+ * @package th.co.cenos.dao
+ * @classname AbstractDao
  * @author Pasuwat Wang (CENS ONLINE SERVICES)
- * @created Nov 16, 2016 3:52:36 PM
+ * @created Nov 20, 2016 4:28:44 PM
  */
-public class Warehouse implements Serializable {
+public abstract class AbstractDao {
+	
+	protected Logger logger; 
+	
+	public AbstractDao(){
+		init();
+	}
+	
+	@Autowired
+	DataSource dataSource;
+	
+	protected Connection getConnection() throws NoDatasourceException , SQLException{
+		if(dataSource == null)
+			throw new NoDatasourceException("No Datasource");
+		
+		return dataSource.getConnection();
+	}
+	
+	protected abstract void init();
+	
+	protected void dbObjClosed(Object o) {
+		if(o == null)
+			return;
+		
+		try{
+			if( o instanceof ResultSet ){
+				ResultSet rs = (ResultSet)o;
+				rs.close();
+			}
+		}
+		catch(Exception ex){
+			logger.warn("DB Object cannot closed!");
+		}
+	}
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -1936356748911194167L;
-	
-	private int adOrgId;
-	private int warehouseId ;
-	private String warehouseName;
-	
-	private List<Locator> locatorL;
-	/**
-	 * @return the adOrgId
-	 */
-	public int getAdOrgId() {
-		return adOrgId;
-	}
-	/**
-	 * @param adOrgId the adOrgId to set
-	 */
-	public void setAdOrgId(int adOrgId) {
-		this.adOrgId = adOrgId;
-	}
-	/**
-	 * @return the warehouseId
-	 */
-	public int getWarehouseId() {
-		return warehouseId;
-	}
-	/**
-	 * @param warehouseId the warehouseId to set
-	 */
-	public void setWarehouseId(int warehouseId) {
-		this.warehouseId = warehouseId;
-	}
-	/**
-	 * @return the warehouseName
-	 */
-	public String getWarehouseName() {
-		return warehouseName;
-	}
-	/**
-	 * @param warehouseName the warehouseName to set
-	 */
-	public void setWarehouseName(String warehouseName) {
-		this.warehouseName = warehouseName;
-	}
-	/**
-	 * @return the locatorL
-	 */
-	public List<Locator> getLocatorL() {
-		return locatorL;
-	}
-	/**
-	 * @param locatorL the locatorL to set
-	 */
-	public void setLocatorL(List<Locator> locatorL) {
-		this.locatorL = locatorL;
-	}
-	 
 }

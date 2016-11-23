@@ -19,24 +19,22 @@
         	<div class="ui-field-contain">
 				<label for="userId"><spring:message code="label.userId" text="User Id" /> </label>
 				<input type="text" name="userId" id="userId" class="required" value="" placeholder="User ID" data-mini="true" />
-				<span />
 			</div>
             
             <div class="ui-field-contain">
 				<label for="pwd"><spring:message code="label.password" text="Password" /></label>
 				<input type="password" name="pwd" id="pwd" class="required" value="" placeholder="Password" data-mini="true" />
-				<span />
+				
 			</div>
 			
-			<span />
 			
 			<button type="submit" id="loginBtn" class="ui-shadow ui-btn ui-corner-all ui-mini">Login</button>
 
 			</form>
-            <div id="version" class="logo-menu-block text-center">
-				<span class="version"><i class="fa fa-cube"></i><small><spring:message code="app.name" /> V.<spring:message code="myStock.version" /> by <a href="<spring:message code="support.url" />">COS</a></small></span>
-			</div>
+            <jsp:include page="version.jsp"></jsp:include>
 		</div>
 	</div>
+	
+	<jsp:include page="toastr.jsp"></jsp:include>
 </body>
 </html>

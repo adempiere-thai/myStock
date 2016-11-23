@@ -16,12 +16,23 @@
  *****************************************************************************/
 package th.co.cenos.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+
+import th.co.cenos.model.User;
+import th.co.cenos.model.Warehouse;
+import th.co.cenos.services.SecurityService;
+import th.co.cenos.web.WebSession;
 
 /**
  * @function myStock
@@ -35,17 +46,133 @@ public class LoginController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 	
+	@Autowired
+	SecurityService securityService;
+	
+	 @Value("${client.id}")
+     private String adClientId;
+	 
+	 @Value("${session.timeout}")
+     private String sessionTimeout;
+	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String showLogin() {
 		logger.debug("Login page");
 		return "login";
 	}
 	
-	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String login(@RequestParam("userId") String userId , @RequestParam("pwd") String pwd) {
-		logger.debug(String.format("Login Username : %s Password : %s", userId , pwd));
+	private int getADClientId(){
+		int ret = 0;
+		if(StringUtils.isEmpty(adClientId))
+			return ret;
 		
-		return "login";
+		try{
+			ret = Integer.valueOf(adClientId);
+		}
+		catch(Exception e){
+			logger.debug(String.format("Cannot Parse AD Client ID %s", adClientId));
+		}
+		
+		return ret ;
 	}
-
+	
+	private int getSessionTimeout(){
+		int ret = 1800;
+		if(StringUtils.isEmpty(sessionTimeout))
+			return ret;
+		
+		try{
+			ret = Integer.valueOf(sessionTimeout);
+		}
+		catch(Exception e){
+			logger.debug(String.format("Cannot Parse AD Client ID %s", sessionTimeout));
+		}
+		
+		return ret ;
+	}
+	
+	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	public ModelAndView login(@RequestParam("userId") String userId , @RequestParam("pwd") String pwd , HttpServletRequest request) {
+		ModelAndView model = null;
+		User user = new User();
+		user.setUsername(userId);
+		user.setPwd(pwd);
+		
+		if(StringUtils.isEmpty(userId) || StringUtils.isEmpty(pwd) ){
+			model = new ModelAndView("redirect:/login.jsp");
+			model.addObject("error", "err.login.noUserPassword");
+			return model;
+		}
+		
+		logger.debug(String.format("Login Username : %s Password : %s", userId , pwd));
+		user = securityService.authentication(getADClientId(),userId, pwd);
+		
+		if(user == null){
+			model = new ModelAndView("redirect:/login.jsp");
+			model.addObject("error", "err.login.failure");
+			return model;
+		}
+		
+		// Set User Session
+		request.getSession().setMaxInactiveInterval(getSessionTimeout()); 
+		request.getSession().setAttribute(WebSession._LOGIN_USER, user);
+		
+		model = new ModelAndView();
+		model.setViewName("default");
+		model.addObject("warehouseL", securityService.getUserWarehouse(user));
+		
+		return model;
+	}
+	
+	@RequestMapping(value = "/default", method = RequestMethod.POST)
+	public ModelAndView defaultValue(@RequestParam("wh") String warehouseId , HttpServletRequest request) {
+		ModelAndView model = null;
+		Warehouse warehouse = null;
+		
+		logger.debug(String.format("Default Warehouse : %s ", warehouseId));
+		
+		if(StringUtils.isEmpty(warehouseId)){
+			model = new ModelAndView();
+			model.setViewName("default");
+			model.addObject("error", "err.default.noWarehouseId");
+			model.addObject("warehouseL", securityService.getUserWarehouse(WebSession.getLoginUser(request)));
+			return model;
+		}
+		
+		warehouse = securityService.getWarehouse(Integer.valueOf(warehouseId));
+		
+		if(warehouse == null){
+			model = new ModelAndView();
+			model.setViewName("default");
+			model.addObject("error", "err.default.noWarehouseFound");
+			model.addObject("warehouseL", securityService.getUserWarehouse(WebSession.getLoginUser(request)));
+			return model;
+		}
+		
+		// Set User Session
+		request.getSession().setAttribute(WebSession._DEFAULT_WAREHOUSE, warehouse);
+		
+		model = new ModelAndView();
+		model.setViewName("redirect:/home");
+		
+		return model;
+	}
+	
+	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	public ModelAndView showLogin(HttpServletRequest request) {
+		ModelAndView model = null;
+		model = new ModelAndView("redirect:/login.jsp");
+		
+		return model;
+	}
+	
+	
+	@RequestMapping(value = "/logout", method = RequestMethod.GET)
+	public ModelAndView logout(HttpServletRequest request) {
+		ModelAndView model = null;
+		model = new ModelAndView("redirect:/login.jsp");
+		request.getSession().invalidate();
+		
+		return model;
+	}
 }
