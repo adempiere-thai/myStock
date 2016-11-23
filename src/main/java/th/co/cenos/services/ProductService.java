@@ -18,6 +18,7 @@ package th.co.cenos.services;
 
 import java.util.List;
 
+import th.co.cenos.model.AttributeSetInstance;
 import th.co.cenos.model.Product;
 
 /**
@@ -31,4 +32,6 @@ public interface ProductService {
 	public List<Product> getProductList(int adClientId , int mWarehouseId , String srhKey);
 	
 	public Product getProductById(int productId);
+	
+	public AttributeSetInstance getAttributeSetInstanceById(int attributeSetInstanceId);
 }

@@ -14,55 +14,38 @@
  * ComPiere, Inc., 2620 Augustine Dr. #245, Santa Clara, CA 95054, USA        *
  * or via info@compiere.org or http://www.compiere.org/license.html           *
  *****************************************************************************/
-package th.co.cenos.service.imp;
+package th.co.cenos.controller;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import javax.servlet.http.HttpServletRequest;
 
-import th.co.cenos.dao.ProductAttributeDao;
-import th.co.cenos.dao.ProductDao;
-import th.co.cenos.model.AttributeSetInstance;
-import th.co.cenos.model.Product;
-import th.co.cenos.services.ProductService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
  * @function myStock
- * @package th.co.cenos.service.imp
- * @classname ProductServiceImp
+ * @package th.co.cenos.controller
+ * @classname LoginController
  * @author Pasuwat Wang (CENS ONLINE SERVICES)
- * @created Nov 23, 2016 3:17:03 PM
+ * @created Nov 16, 2016 10:42:48 AM
  */
-@Service
-@Transactional
-public class ProductServiceImp implements ProductService {
+@Controller
+public class StocktakingController {
 	
-	@Autowired
-	ProductDao productDao;
+	private static final Logger logger = LoggerFactory.getLogger(StocktakingController.class);
 	
-	@Autowired
-	ProductAttributeDao productAttributeDao;
-	
-	@Override
-	public List<Product> getProductList(int adClientId, int mWarehouseId,
-			String srhKey) {
-		// TODO Auto-generated method stub
-		return productDao.getProductList(adClientId, mWarehouseId, srhKey);
+	@RequestMapping(value = "/stocking", method = RequestMethod.GET)
+	public ModelAndView showProductPage(HttpServletRequest request) {
+		ModelAndView model = new ModelAndView();
+		model.setViewName("product");
+		
+		return model;
 	}
-
-	@Override
-	public Product getProductById(int productId) {
-		// TODO Auto-generated method stub
-		return productDao.getProductById(productId);
-	}
-
-	@Override
-	public AttributeSetInstance getAttributeSetInstanceById(
-			int attributeSetInstanceId) {
-		// TODO Auto-generated method stub
-		return productAttributeDao.getAttributeSetInsanceById(attributeSetInstanceId);
-	}
-
 }

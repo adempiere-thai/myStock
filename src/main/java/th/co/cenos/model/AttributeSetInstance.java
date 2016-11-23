@@ -14,55 +14,52 @@
  * ComPiere, Inc., 2620 Augustine Dr. #245, Santa Clara, CA 95054, USA        *
  * or via info@compiere.org or http://www.compiere.org/license.html           *
  *****************************************************************************/
-package th.co.cenos.service.imp;
+package th.co.cenos.model;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import th.co.cenos.dao.ProductAttributeDao;
-import th.co.cenos.dao.ProductDao;
-import th.co.cenos.model.AttributeSetInstance;
-import th.co.cenos.model.Product;
-import th.co.cenos.services.ProductService;
+import java.io.Serializable;
 
 /**
  * @function myStock
- * @package th.co.cenos.service.imp
- * @classname ProductServiceImp
+ * @package th.co.cenos.model
+ * @classname AttributeSetInstance
  * @author Pasuwat Wang (CENS ONLINE SERVICES)
- * @created Nov 23, 2016 3:17:03 PM
+ * @created Nov 16, 2016 9:52:09 AM
  */
-@Service
-@Transactional
-public class ProductServiceImp implements ProductService {
-	
-	@Autowired
-	ProductDao productDao;
-	
-	@Autowired
-	ProductAttributeDao productAttributeDao;
-	
-	@Override
-	public List<Product> getProductList(int adClientId, int mWarehouseId,
-			String srhKey) {
-		// TODO Auto-generated method stub
-		return productDao.getProductList(adClientId, mWarehouseId, srhKey);
-	}
+public class AttributeSetInstance implements Serializable {
 
-	@Override
-	public Product getProductById(int productId) {
-		// TODO Auto-generated method stub
-		return productDao.getProductById(productId);
-	}
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4835292487296607099L;
 
-	@Override
-	public AttributeSetInstance getAttributeSetInstanceById(
-			int attributeSetInstanceId) {
-		// TODO Auto-generated method stub
-		return productAttributeDao.getAttributeSetInsanceById(attributeSetInstanceId);
+	private int attributeSetInstanceId;
+	private String description;
+	private String lotNo;
+	private String attributeSet;
+	
+	public int getAttributeSetInstanceId() {
+		return attributeSetInstanceId;
+	}
+	public void setAttributeSetInstanceId(int attributeSetInstanceId) {
+		this.attributeSetInstanceId = attributeSetInstanceId;
+	}
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	public String getLotNo() {
+		return lotNo;
+	}
+	public void setLotNo(String lotNo) {
+		this.lotNo = lotNo;
+	}
+	public String getAttributeSet() {
+		return attributeSet;
+	}
+	public void setAttributeSet(String attributeSet) {
+		this.attributeSet = attributeSet;
 	}
 
 }
