@@ -124,7 +124,7 @@ public class WarehouseLocatorDaoImp extends AbstractDao implements
 					Locator locator = new Locator();
 					locator.setLocatorId(rset.getInt("M_Locator_Id"));
 					locator.setLocatorKey(rset.getString("Value"));
-					locator.setDefault("Y".equals(rset.getString("isDefault")));
+					locator.setDefaultLocator("Y".equals(rset.getString("isDefault")));
 					
 					locatorL.add(locator);
 				}

@@ -29,6 +29,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import th.co.cenos.model.Locator;
+import th.co.cenos.model.Stocktaking;
+import th.co.cenos.model.Warehouse;
+import th.co.cenos.web.WebSession;
+
 /**
  * @function myStock
  * @package th.co.cenos.controller
@@ -41,11 +46,26 @@ public class StocktakingController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(StocktakingController.class);
 	
-	@RequestMapping(value = "/stocking", method = RequestMethod.GET)
+	@RequestMapping(value = "/stocktaking", method = RequestMethod.GET)
 	public ModelAndView showProductPage(HttpServletRequest request) {
-		ModelAndView model = new ModelAndView();
-		model.setViewName("product");
+		Warehouse warehouse = WebSession.getDefaultWarehouse(request);
+		List<Locator> locatorL = warehouse.getLocatorL();
 		
+		ModelAndView model = new ModelAndView();
+		model.setViewName("stocktaking");
+		model.addObject("locatorL", locatorL);
+		
+		return model;
+	}
+	
+	@RequestMapping(value = "/stocktaking/detail", method = RequestMethod.GET)
+	public ModelAndView showStocktakingDetail(HttpServletRequest request) {
+		Stocktaking stocktaking = WebSession.getOpenedStocktaking(request);
+		
+		ModelAndView model = new ModelAndView();
+		model.setViewName("stocktaking-detail");
+		model.addObject("stocktaking", stocktaking);
+
 		return model;
 	}
 }

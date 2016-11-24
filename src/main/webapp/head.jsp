@@ -5,8 +5,10 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <head>
 	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title><spring:message code="app.name" /> : WIP Electric</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    
+	<title><spring:message code="app.name" /> : <spring:message code="client.name" /></title>
 	<!-- Stylesheet -->
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/jquery.mobile-1.4.0.min.css" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/styles.css" />
@@ -20,6 +22,5 @@
 	<!-- Javascript -->
 	<script src="${pageContext.request.contextPath}/resources/js/jquery-1.11.1.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/jquery.mobile-1.4.5.min.js"></script>
-
 	<!-- End Javascript -->
 </head>

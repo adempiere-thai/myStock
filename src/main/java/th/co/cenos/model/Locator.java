@@ -35,7 +35,7 @@ public class Locator implements Serializable {
 	private int locatorId ;
 	
 	private String locatorKey;
-	private boolean isDefault;
+	private boolean defaultLocator;
 	
 	
 	public int getLocatorId() {
@@ -51,12 +51,12 @@ public class Locator implements Serializable {
 		this.locatorKey = locatorKey;
 	}
 
-	public boolean isDefault() {
-		return isDefault;
+	public boolean isDefaultLocator() {
+		return defaultLocator;
 	}
 	
-	public void setDefault(boolean isDefault) {
-		this.isDefault = isDefault;
+	public void setDefaultLocator(boolean defaultLocator) {
+		this.defaultLocator = defaultLocator;
 	}
 	
 }
