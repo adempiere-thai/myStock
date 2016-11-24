@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Repository;
 
 import th.co.cenos.dao.AbstractDao;
 import th.co.cenos.dao.ProductAttributeDao;
@@ -18,6 +19,7 @@ import th.co.cenos.model.Product;
  * @author Pasuwat Wang (CENS ONLINE SERVICES)
  * @created Nov 23, 2016 10:40:23 PM
  */
+@Repository
 public class ProductAttributeDaoImp extends AbstractDao implements ProductAttributeDao {
 
 	@Override
