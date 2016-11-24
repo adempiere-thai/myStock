@@ -65,4 +65,13 @@ public class ProductServiceImp implements ProductService {
 		return productAttributeDao.getAttributeSetInsanceById(attributeSetInstanceId);
 	}
 
+	/* (non-Javadoc)
+	 * @see th.co.cenos.services.ProductService#getProductByKey(java.lang.String)
+	 */
+	@Override
+	public Product getProductByKey(String srhKey) {
+		// TODO Auto-generated method stub
+		return productDao.getProductByKey(srhKey);
+	}
+
 }

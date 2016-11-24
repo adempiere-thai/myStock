@@ -44,7 +44,8 @@ public class ProductDaoImp extends AbstractDao implements ProductDao {
 		logger = LoggerFactory.getLogger(ProductDaoImp.class);
 	}
 
-	public List<Product> getProductList(int adClientId , int mWarehouseId , String srhKey) {
+	public List<Product> getProductList(int adClientId, int mWarehouseId,
+			String srhKey) {
 		// TODO Auto-generated method stub
 		Connection conn = null;
 		PreparedStatement ppstmt = null;
@@ -66,9 +67,9 @@ public class ProductDaoImp extends AbstractDao implements ProductDao {
 
 			int paramIdx = 1;
 			ppstmt.setInt(paramIdx++, adClientId);
-			ppstmt.setInt(paramIdx++,mWarehouseId );
-			ppstmt.setString(paramIdx++, "%"+srhKey+"%");
-			ppstmt.setString(paramIdx++, "%"+srhKey+"%");
+			ppstmt.setInt(paramIdx++, mWarehouseId);
+			ppstmt.setString(paramIdx++, "%" + srhKey + "%");
+			ppstmt.setString(paramIdx++, "%" + srhKey + "%");
 
 			rset = ppstmt.executeQuery();
 			while (rset.next()) {
@@ -111,6 +112,46 @@ public class ProductDaoImp extends AbstractDao implements ProductDao {
 
 			int paramIdx = 1;
 			ppstmt.setInt(paramIdx++, productId);
+
+			rset = ppstmt.executeQuery();
+			if (rset.next()) {
+				product = new Product();
+				product.setProductId(rset.getInt("M_Product_ID"));
+				product.setProductSrhKey(rset.getString("value"));
+				product.setProductName(rset.getString("Name"));
+			}
+		} catch (Exception ex) {
+			logger.error("Login Error");
+			ex.printStackTrace();
+		} finally {
+			dbObjClosed(rset);
+			dbObjClosed(ppstmt);
+		}
+
+		return product;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see th.co.cenos.dao.ProductDao#getProductByKey(java.lang.String)
+	 */
+	@Override
+	public Product getProductByKey(String srhKey) {
+		// TODO Auto-generated method stub
+		Connection conn = null;
+		PreparedStatement ppstmt = null;
+		ResultSet rset = null;
+		Product product = null;
+		StringBuffer productSQL = new StringBuffer(
+				"SELECT * FROM M_Product pd WHERE pd.value = ? ");
+
+		try {
+			conn = getConnection();
+			ppstmt = conn.prepareStatement(productSQL.toString());
+
+			int paramIdx = 1;
+			ppstmt.setString(paramIdx++, srhKey);
 
 			rset = ppstmt.executeQuery();
 			if (rset.next()) {

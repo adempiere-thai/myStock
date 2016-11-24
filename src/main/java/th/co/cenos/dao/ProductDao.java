@@ -23,7 +23,7 @@ import th.co.cenos.model.Product;
 /**
  * @function myStock
  * @package th.co.cenos.dao
- * @classname UserDao
+ * @classname ProductDao
  * @author Pasuwat Wang (CENS ONLINE SERVICES)
  * @created Nov 20, 2016 12:43:43 AM
  */
@@ -31,4 +31,6 @@ public interface ProductDao {
 	public List<Product> getProductList(int adClientId , int mWarehouseId ,String srhKey);
 	
 	public Product getProductById(int productId);
+
+	public Product getProductByKey(String srhKey);
 }

@@ -33,5 +33,7 @@ public interface ProductService {
 	
 	public Product getProductById(int productId);
 	
+	public Product getProductByKey(String srhKey);
+	
 	public AttributeSetInstance getAttributeSetInstanceById(int attributeSetInstanceId);
 }

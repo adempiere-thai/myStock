@@ -34,6 +34,7 @@ import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import th.co.cenos.model.AttributeSetInstance;
 import th.co.cenos.model.Product;
 import th.co.cenos.model.User;
 import th.co.cenos.model.Warehouse;
@@ -92,11 +93,11 @@ public class ProductController {
 		return model;
 	}
 	
-	private String toJsonString(List<Product> productL){
+	private String toJsonString(Object object){
 		ObjectMapper mapper = new ObjectMapper();
 		String jsonString = null;
 		try {
-			jsonString = mapper.writeValueAsString(productL);
+			jsonString = mapper.writeValueAsString(object);
 		} catch (Exception e) {
 			logger.error("Cannot Parse Object To JSON");
 			e.printStackTrace();
@@ -104,5 +105,69 @@ public class ProductController {
 		
 		return jsonString;
 	}
+	
+	@RequestMapping(value = "/findProductByKey" , method = RequestMethod.GET)
+	public ModelAndView findProductByKey(@RequestParam("srhKey") String srhKey , HttpServletRequest request) {
+		if(srhKey == null || srhKey.length() <3 ){
+			logger.debug("At least 3 digit product search key.");
+			return returnJson("");
+		}
+		
+		User user =WebSession.getLoginUser(request);
+		//Warehouse warehouse = WebSession.getDefaultWarehouse(request);
+		
+		if(user == null){
+			logger.debug("No User Login");
+			return returnJson("");
+		}
 
+		Product product = null;
+		String jsonString = null;
+		
+		product = productService.getProductByKey(srhKey);
+		jsonString = toJsonString(product);
+		
+		return returnJson(jsonString);
+	}
+	
+	public ModelAndView returnJson(String json){
+		ModelAndView model = new ModelAndView();
+		model.setViewName("json");
+		model.addObject("JSON", json);
+		
+		return model;
+	}
+	
+	
+	@RequestMapping(value = "/findASIById" , method = RequestMethod.GET)
+	public ModelAndView findASIById(@RequestParam("asiId") String asiId , HttpServletRequest request) {
+		if(asiId == null || asiId.length() <3 ){
+			logger.debug("At least 3 digit product search key.");
+			return returnJson("");
+		}
+		
+		User user =WebSession.getLoginUser(request);
+		
+		if(user == null){
+			logger.debug("No User Login");
+			return returnJson("");
+		}
+
+		AttributeSetInstance asi = null;
+		String jsonString = null;
+		int id = 0;
+		
+		try{
+			id = Integer.valueOf(asiId); 
+		}
+		catch(Exception ex){
+			logger.debug("Cannot Parese ASIId");
+			return returnJson("");
+		}
+		
+		asi = productService.getAttributeSetInstanceById(id);
+		jsonString = toJsonString(asi);
+		
+		return returnJson(jsonString);
+	}
 }
