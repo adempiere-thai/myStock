@@ -14,52 +14,42 @@
  * ComPiere, Inc., 2620 Augustine Dr. #245, Santa Clara, CA 95054, USA        *
  * or via info@compiere.org or http://www.compiere.org/license.html           *
  *****************************************************************************/
-package th.co.cenos.web;
+package th.co.cenos.model;
 
-import javax.servlet.http.HttpServletRequest;
-
-import th.co.cenos.model.User;
-import th.co.cenos.model.Warehouse;
-import th.co.cenos.model.Stocktaking;
+import java.io.Serializable;
+import java.util.List;
 
 /**
  * @function myStock
- * @package th.co.cenos.web
- * @classname WebSession
+ * @package th.co.cenos.model
+ * @classname Stocktaking
  * @author Pasuwat Wang (CENS ONLINE SERVICES)
- * @created Nov 16, 2016 9:49:58 AM
+ * @created Nov 24, 2016 12:09:55 PM
  */
-public class WebSession {
-	public static final String _LOGIN_USER = "LOGIN_USER";
-	public static final String _DEFAULT_WAREHOUSE = "DEFAULT_WAREHOUSE";
-	public static final String _STOCKTAKING_DOCUMENT ="STOCKTAKING";
-	public static final String _IS_OPEN_STOCKTAKING ="IS_OPEN_STOCKTAKING";
+public class Stocktaking implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7205460459420718443L;
 	
-	public static User getLoginUser(HttpServletRequest request){
-		User user = null;
-		
-		if(request.getSession().getAttribute(_LOGIN_USER)!=null)
-			user = (User)request.getSession().getAttribute(_LOGIN_USER) ;
-		
-		return user;
+	private int stocktakingId ;
+	
+	private List<StocktakingLine> lineL;
+
+	public int getStocktakingId() {
+		return stocktakingId;
 	}
-	
-	public static Stocktaking getOpenedStocktaking(HttpServletRequest request){
-		Stocktaking stocktaking = null;
-		
-		if(request.getSession().getAttribute(_STOCKTAKING_DOCUMENT)!=null)
-			stocktaking = (Stocktaking)request.getSession().getAttribute(_STOCKTAKING_DOCUMENT) ;
-		
-		return stocktaking;
+
+	public void setStocktakingId(int stocktakingId) {
+		this.stocktakingId = stocktakingId;
 	}
-	
-	public static Warehouse getDefaultWarehouse(HttpServletRequest request){
-		Warehouse warehouse = null;
-		
-		if(request.getSession().getAttribute(_DEFAULT_WAREHOUSE)!=null)
-			warehouse = (Warehouse)request.getSession().getAttribute(_DEFAULT_WAREHOUSE) ;
-		
-		return warehouse;
+
+	public List<StocktakingLine> getLineL() {
+		return lineL;
 	}
-	
+
+	public void setLineL(List<StocktakingLine> lineL) {
+		this.lineL = lineL;
+	}
 }

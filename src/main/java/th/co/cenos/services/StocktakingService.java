@@ -1,5 +1,7 @@
 package th.co.cenos.services;
 
+import th.co.cenos.model.Stocktaking;
+import th.co.cenos.model.StocktakingLine;
 import th.co.cenos.model.Warehouse;
 
 /**
@@ -10,6 +12,7 @@ import th.co.cenos.model.Warehouse;
  * @created Nov 23, 2016 10:06:01 PM
  */
 public interface StocktakingService {
-	public int getOpenStocktaking(Warehouse warehouse);
+	public Stocktaking getOpenStocktaking(Warehouse warehouse);
 	
+	public StocktakingLine saveStocktakingLine(StocktakingLine line);
 }

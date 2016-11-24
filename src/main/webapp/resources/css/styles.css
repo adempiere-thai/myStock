@@ -53,6 +53,13 @@
 	text-shadow: none !important;
 }
 
+.btn-disabled {
+	color: #fff !important;
+	background-color: #98a0a2 !important;
+    border-color: #98a0a2 !important;
+	text-shadow: none !important;
+}
+
 /* Custom CSS */
 
 hr {

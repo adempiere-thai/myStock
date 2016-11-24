@@ -14,52 +14,42 @@
  * ComPiere, Inc., 2620 Augustine Dr. #245, Santa Clara, CA 95054, USA        *
  * or via info@compiere.org or http://www.compiere.org/license.html           *
  *****************************************************************************/
-package th.co.cenos.web;
+package th.co.cenos.service.imp;
 
-import javax.servlet.http.HttpServletRequest;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import th.co.cenos.model.User;
-import th.co.cenos.model.Warehouse;
+import th.co.cenos.dao.StocktakingDao;
 import th.co.cenos.model.Stocktaking;
+import th.co.cenos.model.StocktakingLine;
+import th.co.cenos.model.Warehouse;
+import th.co.cenos.services.StocktakingService;
 
 /**
  * @function myStock
- * @package th.co.cenos.web
- * @classname WebSession
+ * @package th.co.cenos.service.imp
+ * @classname StocktakingServiceImp
  * @author Pasuwat Wang (CENS ONLINE SERVICES)
- * @created Nov 16, 2016 9:49:58 AM
+ * @created Nov 24, 2016 3:10:43 PM
  */
-public class WebSession {
-	public static final String _LOGIN_USER = "LOGIN_USER";
-	public static final String _DEFAULT_WAREHOUSE = "DEFAULT_WAREHOUSE";
-	public static final String _STOCKTAKING_DOCUMENT ="STOCKTAKING";
-	public static final String _IS_OPEN_STOCKTAKING ="IS_OPEN_STOCKTAKING";
+@Service
+@Transactional
+public class StocktakingServiceImp implements StocktakingService {
+
+	@Autowired
+	StocktakingDao stocktakingDao;
 	
-	public static User getLoginUser(HttpServletRequest request){
-		User user = null;
-		
-		if(request.getSession().getAttribute(_LOGIN_USER)!=null)
-			user = (User)request.getSession().getAttribute(_LOGIN_USER) ;
-		
-		return user;
+	@Override
+	public Stocktaking getOpenStocktaking(Warehouse warehouse) {
+		// TODO Auto-generated method stub
+		return stocktakingDao.getOpenStocktaking(warehouse);
 	}
-	
-	public static Stocktaking getOpenedStocktaking(HttpServletRequest request){
-		Stocktaking stocktaking = null;
-		
-		if(request.getSession().getAttribute(_STOCKTAKING_DOCUMENT)!=null)
-			stocktaking = (Stocktaking)request.getSession().getAttribute(_STOCKTAKING_DOCUMENT) ;
-		
-		return stocktaking;
+
+	@Override
+	public StocktakingLine saveStocktakingLine(StocktakingLine line) {
+		// TODO Auto-generated method stub
+		return null;
 	}
-	
-	public static Warehouse getDefaultWarehouse(HttpServletRequest request){
-		Warehouse warehouse = null;
-		
-		if(request.getSession().getAttribute(_DEFAULT_WAREHOUSE)!=null)
-			warehouse = (Warehouse)request.getSession().getAttribute(_DEFAULT_WAREHOUSE) ;
-		
-		return warehouse;
-	}
-	
+
 }

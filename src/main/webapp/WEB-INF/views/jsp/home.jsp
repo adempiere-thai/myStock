@@ -20,7 +20,18 @@
 			</div><!-- #logo -->
 			
 			<c:forEach items="${menuL}" var="menu">
-				<a href="${pageContext.request.contextPath}/${menu.url}" class="ui-btn ui-corner-all btn-info" data-direction="reverse" data-ajax="false"> <spring:message code="${menu.menuName}" text="${menu.menuName}" /> </a>
+				<c:if test="${menu.url eq 'stocktaking'}">
+					<c:if test="${sessionScope.IS_OPEN_STOCKTAKING}">	
+						<a href="${pageContext.request.contextPath}/${menu.url}" class="ui-btn ui-corner-all btn-info" data-direction="reverse" data-ajax="false"> <spring:message code="${menu.menuName}" text="${menu.menuName}" /> </a>
+					</c:if>
+					<c:if test="${not sessionScope.IS_OPEN_STOCKTAKING}">	
+						<a href="#" class="ui-btn ui-corner-all btn-disabled" data-direction="reverse" data-ajax="false"> <spring:message code="${menu.menuName}" text="${menu.menuName}" /> </a>
+					</c:if>										
+				</c:if>			
+				<c:if test="${menu.url ne 'stocktaking'}">
+					<a href="${pageContext.request.contextPath}/${menu.url}" class="ui-btn ui-corner-all btn-info" data-direction="reverse" data-ajax="false"> <spring:message code="${menu.menuName}" text="${menu.menuName}" /> </a>					
+				</c:if>
+				
 			</c:forEach>
 			<a href="logout" class="ui-btn ui-corner-all btn-info" data-direction="reverse" data-ajax="false"><spring:message code="menu.logout" text="menu.logout" /> </a>
 		</div>

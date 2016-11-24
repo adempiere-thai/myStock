@@ -39,7 +39,7 @@ import th.co.cenos.web.WebSession;
 /**
  * @function myStock
  * @package th.co.cenos.controller
- * @classname LoginController
+ * @classname HomeController
  * @author Pasuwat Wang (CENS ONLINE SERVICES)
  * @created Nov 16, 2016 10:42:48 AM
  */

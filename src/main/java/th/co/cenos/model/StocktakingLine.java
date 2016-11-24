@@ -14,52 +14,66 @@
  * ComPiere, Inc., 2620 Augustine Dr. #245, Santa Clara, CA 95054, USA        *
  * or via info@compiere.org or http://www.compiere.org/license.html           *
  *****************************************************************************/
-package th.co.cenos.web;
+package th.co.cenos.model;
 
-import javax.servlet.http.HttpServletRequest;
-
-import th.co.cenos.model.User;
-import th.co.cenos.model.Warehouse;
-import th.co.cenos.model.Stocktaking;
+import java.io.Serializable;
+import java.math.BigDecimal;
 
 /**
  * @function myStock
- * @package th.co.cenos.web
- * @classname WebSession
+ * @package th.co.cenos.model
+ * @classname StocktakingLine
  * @author Pasuwat Wang (CENS ONLINE SERVICES)
- * @created Nov 16, 2016 9:49:58 AM
+ * @created Nov 24, 2016 12:11:23 PM
  */
-public class WebSession {
-	public static final String _LOGIN_USER = "LOGIN_USER";
-	public static final String _DEFAULT_WAREHOUSE = "DEFAULT_WAREHOUSE";
-	public static final String _STOCKTAKING_DOCUMENT ="STOCKTAKING";
-	public static final String _IS_OPEN_STOCKTAKING ="IS_OPEN_STOCKTAKING";
+public class StocktakingLine implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1901137900274204281L;
 	
-	public static User getLoginUser(HttpServletRequest request){
-		User user = null;
-		
-		if(request.getSession().getAttribute(_LOGIN_USER)!=null)
-			user = (User)request.getSession().getAttribute(_LOGIN_USER) ;
-		
-		return user;
+	private int stocktakingLineId;
+	private int lineNo;
+	private Product product;
+	private AttributeSetInstance asi;
+	private Locator locator;
+	private BigDecimal countQty;
+	
+	public int getStocktakingLineId() {
+		return stocktakingLineId;
 	}
-	
-	public static Stocktaking getOpenedStocktaking(HttpServletRequest request){
-		Stocktaking stocktaking = null;
-		
-		if(request.getSession().getAttribute(_STOCKTAKING_DOCUMENT)!=null)
-			stocktaking = (Stocktaking)request.getSession().getAttribute(_STOCKTAKING_DOCUMENT) ;
-		
-		return stocktaking;
+	public void setStocktakingLineId(int stocktakingLineId) {
+		this.stocktakingLineId = stocktakingLineId;
 	}
-	
-	public static Warehouse getDefaultWarehouse(HttpServletRequest request){
-		Warehouse warehouse = null;
-		
-		if(request.getSession().getAttribute(_DEFAULT_WAREHOUSE)!=null)
-			warehouse = (Warehouse)request.getSession().getAttribute(_DEFAULT_WAREHOUSE) ;
-		
-		return warehouse;
+	public int getLineNo() {
+		return lineNo;
 	}
-	
+	public void setLineNo(int lineNo) {
+		this.lineNo = lineNo;
+	}
+	public Product getProduct() {
+		return product;
+	}
+	public void setProduct(Product product) {
+		this.product = product;
+	}
+	public AttributeSetInstance getAsi() {
+		return asi;
+	}
+	public void setAsi(AttributeSetInstance asi) {
+		this.asi = asi;
+	}
+	public Locator getLocator() {
+		return locator;
+	}
+	public void setLocator(Locator locator) {
+		this.locator = locator;
+	}
+	public BigDecimal getCountQty() {
+		return countQty;
+	}
+	public void setCountQty(BigDecimal countQty) {
+		this.countQty = countQty;
+	}
 }

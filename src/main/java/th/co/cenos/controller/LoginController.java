@@ -29,9 +29,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import th.co.cenos.model.Stocktaking;
 import th.co.cenos.model.User;
 import th.co.cenos.model.Warehouse;
 import th.co.cenos.services.SecurityService;
+import th.co.cenos.services.StocktakingService;
 import th.co.cenos.web.WebSession;
 
 /**
@@ -48,6 +50,9 @@ public class LoginController {
 	
 	@Autowired
 	SecurityService securityService;
+	
+	@Autowired
+	StocktakingService stocktakingService;
 	
 	 @Value("${client.id}")
      private String adClientId;
@@ -149,8 +154,18 @@ public class LoginController {
 			return model;
 		}
 		
-		// Set User Session
+		// Set Warehouse into Session
 		request.getSession().setAttribute(WebSession._DEFAULT_WAREHOUSE, warehouse);
+		
+		Stocktaking stocktaking = stocktakingService.getOpenStocktaking(warehouse);
+		
+		// Set Stocktaking into Session
+		request.getSession().setAttribute(WebSession._STOCKTAKING_DOCUMENT , stocktaking);
+		boolean isOpenStocktaking = false;
+		if(stocktaking!= null && stocktaking.getStocktakingId() > 0)
+			isOpenStocktaking = true;
+		
+		request.getSession().setAttribute(WebSession._IS_OPEN_STOCKTAKING , isOpenStocktaking);
 		
 		model = new ModelAndView();
 		model.setViewName("redirect:/home");
