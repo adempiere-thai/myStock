@@ -1,5 +1,6 @@
 $( document ).on( "pageinit", "#stocktaking", function() {
-	$( "#nextStep" ).on( "click", function ( e, data ) {
-		
+	$( "#stocktakingDetail" ).on( "click", function ( e, data ) {
+		console.log("Submit Form");
+		$("#locatorFrm").submit();
 	});
 });

@@ -6,59 +6,31 @@
 <html>
 <jsp:include page="../../../head.jsp"></jsp:include>
 <body>
-	<div id="stocktaking" data-role="page" data-theme="a">
+	<div id="stocktaking-detail" data-role="page" data-theme="a">
 		<div data-role="header" data-position="fixed">
-			<h2>Item List</h2>
-			<a id="countItem" href="#" class="ui-btn ui-corner-all ui-btn-inline ui-mini ui-btn-icon-right ui-btn-icon-notext ui-icon-plus ui-btn-right btn-success" data-transition="slide">&nbsp;</a>
+			<h2><spring:message code="label.itemList" text="label.itemList"/></h2>
+			<a id="countItem" href="${pageContext.request.contextPath}/stocktaking/detail/new" class="ui-btn ui-corner-all ui-btn-inline ui-mini ui-btn-icon-right ui-btn-icon-notext ui-icon-plus ui-btn-right btn-success" data-transition="slide">&nbsp;</a>
 		</div>
 		
 		<div role="main" class="ui-content">
 			<ul id="items-in-order-list" data-role="listview" data-inset="false">
-				<li class="items-in-order-item">
-					<h3>NOP1/1 Panhead Screw JP+-M3.5x10R (7.2) CR3Z</h3>
-					<div class="ui-grid-a">
-						<div class="ui-block-a" style="width:70%">
-							<p>WP-SHM 3.5 RoHS_[V-11046]</p>
-						</div><!-- .ui-block-a -->
-						<div class="ui-block-b" style="width:30%">
-							<p class="text-right">62,720 pcs</p>
-						</div><!-- .ui-block-b -->
-					</div><!-- .ui-grid-a -->
-					<div class="action-block">
-						<button type="button" class="ui-btn ui-corner-all ui-btn-inline ui-mini btn-success edit-price-btn" data-rel="popup">Edit</button>
-						<button type="button" class="ui-btn ui-corner-all ui-btn-inline ui-mini btn-danger delete-btn" data-rel="popup">Delete</button>
-					</div>
-				</li>
-				<li class="items-in-order-item">
-					<h3>NOP2 Hexnut น๊อตตัวเมีย-ชุบ CR3Z</h3>
-					<div class="ui-grid-a">
-						<div class="ui-block-a" style="width:70%">
-							<p>WP-SHM 3.5 RoHS_[V-11046]</p>
-						</div><!-- .ui-block-a -->
-						<div class="ui-block-b" style="width:30%">
-							<p class="text-right">61,720 pcs</p>
-						</div><!-- .ui-block-b -->
-					</div><!-- .ui-grid-a -->
-					<div class="action-block">
-						<button type="button" class="ui-btn ui-corner-all ui-btn-inline ui-mini btn-success edit-price-btn" data-rel="popup">Edit</button>
-						<button type="button" class="ui-btn ui-corner-all ui-btn-inline ui-mini btn-danger delete-btn" data-rel="popup">Delete</button>
-					</div>
-				</li>
-				<li class="items-in-order-item">
-					<h3>NOP3 เหล็กรองน็อต-ชุบดีบุก</h3>
-					<div class="ui-grid-a">
-						<div class="ui-block-a" style="width:70%">
-							<p>SKP-Brass 1 ทองเหลือง-งอ 90 องศา (0.8mm.)_[V-10323]</p>
-						</div><!-- .ui-block-a -->
-						<div class="ui-block-b" style="width:30%">
-							<p class="text-right">61,720 pcs</p>
-						</div><!-- .ui-block-b -->
-					</div><!-- .ui-grid-a -->
-					<div class="action-block">
-						<button type="button" class="ui-btn ui-corner-all ui-btn-inline ui-mini btn-success edit-price-btn" data-rel="popup">Edit</button>
-						<button type="button" class="ui-btn ui-corner-all ui-btn-inline ui-mini btn-danger delete-btn" data-rel="popup">Delete</button>
-					</div>
-				</li>
+				<c:forEach items="${detailL}" var="line">
+					<li class="items-in-order-item">
+						<h3>{line.product.productSrhKey} {line.product.productName}</h3>
+						<div class="ui-grid-a">
+							<div class="ui-block-a" style="width:70%">
+								<p>{line.asi.description}</p>
+							</div><!-- .ui-block-a -->
+							<div class="ui-block-b" style="width:30%">
+								<p class="text-right">{line.asi.countQty}</p>
+							</div><!-- .ui-block-b -->
+						</div><!-- .ui-grid-a -->
+						<div class="action-block">
+							<button type="button" class="ui-btn ui-corner-all ui-btn-inline ui-mini btn-success edit-price-btn" data-rel="popup">Edit</button>
+							<button type="button" class="ui-btn ui-corner-all ui-btn-inline ui-mini btn-danger delete-btn" data-rel="popup">Delete</button>
+						</div>
+					</li>
+				</c:forEach>	
 			</ul>
 		</div>
 		<div id="step-block" data-role="footer" data-position="fixed">
