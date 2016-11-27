@@ -30,4 +30,9 @@ $( document ).on( "pageinit", "#product", function() {
 	        event.handled = true;
         }
     });
+	
+	$(".ui-input-clear").on("click", function() {
+		productListView.html("");
+    	productListView.listview("refresh");
+	});
 });

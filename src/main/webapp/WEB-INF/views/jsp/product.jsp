@@ -13,8 +13,9 @@
 		</div>
 		
 		<div role="main" class="ui-content">
+			<form>
         	<input id="products-search" data-type="search" placeholder="Search Here ..." />
-			
+			</form>
 			 <ul id="productList" data-role="listview" data-autodividers="true" data-inset="false" data-filter="true" data-input="#products-search">
 				
 			</ul>
