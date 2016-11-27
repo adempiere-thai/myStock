@@ -23,6 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 import th.co.cenos.dao.StocktakingDao;
 import th.co.cenos.model.Stocktaking;
 import th.co.cenos.model.StocktakingLine;
+import th.co.cenos.model.User;
 import th.co.cenos.model.Warehouse;
 import th.co.cenos.services.StocktakingService;
 
@@ -47,9 +48,9 @@ public class StocktakingServiceImp implements StocktakingService {
 	}
 
 	@Override
-	public StocktakingLine saveStocktakingLine(StocktakingLine line) {
+	public int saveStocktakingLine(StocktakingLine line , User user) {
 		// TODO Auto-generated method stub
-		return null;
+		return stocktakingDao.saveStocktakingLine(line , user);
 	}
 
 }

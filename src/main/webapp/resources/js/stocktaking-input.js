@@ -1,4 +1,4 @@
-$( document ).on( "pageinit", "#product", function() {
+$( document ).on( "pageinit", "#stocktaking-input", function() {
 	console.log("Page Init Input Stocktaking");
 	$("#pdCode").on("input", function(e) {
 		var schTxt = $(this).val();

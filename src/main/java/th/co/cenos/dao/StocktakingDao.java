@@ -18,6 +18,7 @@ package th.co.cenos.dao;
 
 import th.co.cenos.model.Stocktaking;
 import th.co.cenos.model.StocktakingLine;
+import th.co.cenos.model.User;
 import th.co.cenos.model.Warehouse;
 
 /**
@@ -29,6 +30,6 @@ import th.co.cenos.model.Warehouse;
  */
 public interface StocktakingDao {
 	public Stocktaking getOpenStocktaking(Warehouse warehouse);
-	public int saveStocktakingLine(StocktakingLine line);
+	public int saveStocktakingLine(StocktakingLine line , User user);
 	public int deleteStocktakingLine();
 }

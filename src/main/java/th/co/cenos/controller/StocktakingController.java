@@ -16,6 +16,7 @@
  *****************************************************************************/
 package th.co.cenos.controller;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,11 +32,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import th.co.cenos.model.AttributeSetInstance;
 import th.co.cenos.model.Locator;
+import th.co.cenos.model.Product;
 import th.co.cenos.model.Stocktaking;
 import th.co.cenos.model.StocktakingLine;
+import th.co.cenos.model.User;
 import th.co.cenos.model.Warehouse;
 import th.co.cenos.services.ProductService;
+import th.co.cenos.services.SecurityService;
 import th.co.cenos.web.WebSession;
 
 /**
@@ -49,6 +54,12 @@ import th.co.cenos.web.WebSession;
 public class StocktakingController {
 	
 	private Logger logger = LoggerFactory.getLogger(StocktakingController.class);
+	
+	@Autowired
+	ProductService productService;
+	
+	@Autowired
+	SecurityService securityService;
 	
 	@RequestMapping(value = "/stocktaking", method = RequestMethod.GET)
 	public ModelAndView showStocktakingPage(HttpServletRequest request) {
@@ -152,40 +163,56 @@ public class StocktakingController {
 			return model;
 		}
 		
+		StocktakingLine stkLine = new StocktakingLine();
+		
 		model = new ModelAndView();
 		model.setViewName("stocktaking-new");
 		model.addObject("locator", locator);
+		model.addObject("stkLine", stkLine);
 		
 		return model;
 	}
 
 	@RequestMapping(value = "/stocktaking/detail/add", method = RequestMethod.POST)
-	public ModelAndView addNewLine(@RequestParam("locator") String locatorId,HttpServletRequest request) {
+	public ModelAndView addNewLine(@RequestParam("locatorId") String locatorId,
+									@RequestParam("pdCode") String pdCode,
+									@RequestParam("asiId") String asiId,
+									@RequestParam("countQty") String countQty,
+									HttpServletRequest request) 
+	{
 		ModelAndView model = null;
-		int i_locator_id = 0;
+		int i_locatorId = 0;
+		int i_asiId = 0;
+		BigDecimal bd_countQty = BigDecimal.ZERO;
 		
-		try{
-			if(StringUtils.isEmpty(locatorId)){
-				model = new ModelAndView("redirect:/stocktaking");
-				model.addObject("error", "err.stocktaking.locatorId");
-				return model;
-			}
-			
-			i_locator_id = Integer.valueOf(locatorId);
-		}catch(Exception ex){
-			// Cannot Parse Locator
-			model = new ModelAndView("redirect:/stocktaking");
-			model.addObject("error", "err.stocktaking.parsing");
-			return model;
-		}
+		Locator locator = null;
+		Product product = null;
+		AttributeSetInstance asi = null;
 		
-		Locator locator = getLocator(i_locator_id , WebSession.getDefaultWarehouse(request));
-		if(locator == null){
-			// Cannot Find Locator
-			model = new ModelAndView("redirect:/stocktaking");
-			model.addObject("error", "err.stocktaking.locator");
-			return model;
-		}
+		StocktakingLine line = new StocktakingLine();
+		
+		/** Validate
+		 * 1. Check Required Field (Product , Count Qty)
+		 * 2. Check Input Value is correct value
+		 * 		2.1 Product is Existing in DB
+		 * 		2.2 IF HAVE ASI THEN CHECK ASI IS EXISTING
+		 * 		2.3 COUNT QTY IS NUMBER
+		 */
+		
+		User user = WebSession.getLoginUser(request);
+		Stocktaking stocktaking = WebSession.getOpenedStocktaking(request);
+		
+		locator = securityService.getLocator(i_locatorId);
+		product = productService.getProductByKey(user.getAdClientId(),pdCode);
+		if(i_asiId > 0)
+			asi = productService.getAttributeSetInstanceById(i_asiId);
+		
+		line.setProduct(product);
+		line.setAsi(asi);
+		line.setCountQty(bd_countQty);
+		line.setLocator(locator);
+		line.setStocktakingId(stocktaking.getStocktakingId());
+		
 		
 		model = new ModelAndView();
 		model.setViewName("stocktaking-new");
@@ -193,4 +220,6 @@ public class StocktakingController {
 		
 		return model;
 	}
+	
+	
 }

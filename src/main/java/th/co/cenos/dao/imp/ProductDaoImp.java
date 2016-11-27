@@ -59,7 +59,7 @@ public class ProductDaoImp extends AbstractDao implements ProductDao {
 				.append("\t\tWHERE stk.AD_Client_Id = ? AND stk.M_Warehouse_id = ? \n")
 				.append("\t\tAND (stk.product_name like ? or stk.value like ? ) \n")
 				.append("\t\tGROUP BY stk.m_product_id , stk.value ,  stk.product_name, stk.IsStocked ) stock \n")
-				.append("ORDER BY stock.IsStocked DESC , stock.qtyavailable DESC ");
+				.append("ORDER BY stk.value  , stock.IsStocked DESC , stock.qtyavailable DESC ");
 
 		try {
 			conn = getConnection();
@@ -137,20 +137,21 @@ public class ProductDaoImp extends AbstractDao implements ProductDao {
 	 * @see th.co.cenos.dao.ProductDao#getProductByKey(java.lang.String)
 	 */
 	@Override
-	public Product getProductByKey(String srhKey) {
+	public Product getProductByKey(int adClientId , String srhKey) {
 		// TODO Auto-generated method stub
 		Connection conn = null;
 		PreparedStatement ppstmt = null;
 		ResultSet rset = null;
 		Product product = null;
 		StringBuffer productSQL = new StringBuffer(
-				"SELECT * FROM M_Product pd WHERE pd.value = ? ");
+				"SELECT * FROM M_Product pd WHERE pd.AD_Client_ID = ? AND pd.value = ? ");
 
 		try {
 			conn = getConnection();
 			ppstmt = conn.prepareStatement(productSQL.toString());
 
 			int paramIdx = 1;
+			ppstmt.setInt(paramIdx++, adClientId);
 			ppstmt.setString(paramIdx++, srhKey);
 
 			rset = ppstmt.executeQuery();

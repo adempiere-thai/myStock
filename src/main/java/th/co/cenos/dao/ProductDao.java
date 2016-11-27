@@ -32,5 +32,5 @@ public interface ProductDao {
 	
 	public Product getProductById(int productId);
 
-	public Product getProductByKey(String srhKey);
+	public Product getProductByKey(int adClientid, String srhKey);
 }

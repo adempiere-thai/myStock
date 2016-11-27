@@ -33,7 +33,14 @@ public class StocktakingLine implements Serializable {
 	 */
 	private static final long serialVersionUID = -1901137900274204281L;
 	
+	public StocktakingLine(){
+		this.asi = new AttributeSetInstance();
+		this.product = new Product();
+	}
+	
+	private int adOrgId ;
 	private int stocktakingLineId;
+	private int stocktakingId;
 	private int lineNo;
 	private Product product;
 	private AttributeSetInstance asi;
@@ -75,5 +82,17 @@ public class StocktakingLine implements Serializable {
 	}
 	public void setCountQty(BigDecimal countQty) {
 		this.countQty = countQty;
+	}
+	public int getStocktakingId() {
+		return stocktakingId;
+	}
+	public void setStocktakingId(int stocktakingId) {
+		this.stocktakingId = stocktakingId;
+	}
+	public int getAdOrgId() {
+		return adOrgId;
+	}
+	public void setAdOrgId(int adOrgId) {
+		this.adOrgId = adOrgId;
 	}
 }

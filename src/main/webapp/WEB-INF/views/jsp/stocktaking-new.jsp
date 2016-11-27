@@ -16,21 +16,21 @@
 			<form id="countItemFrm" novalidate="novalidate" data-ajax="false" metohd="post" action="${pageContext.request.contextPath}/stocktaking/detail/add">
         	<div class="ui-field-contain">
 				<label for="pdCode"><spring:message code="label.itemCode" text="label.itemCode" /></label>
-				<input type="text" name="pdCode" id="pdCode" class="required" value="" placeholder="Please Scan Item Code" data-mini="true" />
+				<input type="text" name="pdCode" id="pdCode" class="required" value="${stkLine.product.productSrhKey}" placeholder="Please Scan Item Code" data-mini="true" />
 			</div>
 			
-			<p id="productName"></p>
+			<p id="productName">${stkLine.product.productName}</p>
             
             <div class="ui-field-contain">
 				<label for="asiId"><spring:message code="label.asiId" text="label.asiId" /></label>
-				<input type="text" name="asiId" id="asiId" class="required" value="" placeholder="Please Scan ASI Id" data-mini="true" />
+				<input type="text" name="asiId" id="asiId" class="required" value="${stkLine.asi.attributeSetInstanceId}" placeholder="Please Scan ASI Id" data-mini="true" />
 			</div>
 			
-			<p id="asiDesc"></p>
+			<p id="asiDesc">${stkLine.asi.description}</p>
 			
 			<div class="ui-field-contain">
 				<label for="countQty"><spring:message code="label.count.qty" text="label.count.qty" /></label>
-				<input type="number" name="countQty" id="countQty" class="required" value="" placeholder="Count Qty" data-mini="true" />
+				<input type="number" name="countQty" id="countQty" class="required" value="${stkLine.countQty}" placeholder="Count Qty" data-mini="true" />
 			</div>
 			<input id="productId" name="productId" type="hidden" value="" />
 			<input id="locatorId" name="locatorId" type="hidden" value="${locator.locatorId}" />
@@ -44,6 +44,6 @@
 	
 	<!-- Page Javascript -->
 	<script
-		src="${pageContext.request.contextPath}/resources/js/count-item.js"></script>
+		src="${pageContext.request.contextPath}/resources/js/stocktaking-input.js"></script>
 </body>
 </html>

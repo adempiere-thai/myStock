@@ -69,9 +69,9 @@ public class ProductServiceImp implements ProductService {
 	 * @see th.co.cenos.services.ProductService#getProductByKey(java.lang.String)
 	 */
 	@Override
-	public Product getProductByKey(String srhKey) {
+	public Product getProductByKey(int adClientid , String srhKey) {
 		// TODO Auto-generated method stub
-		return productDao.getProductByKey(srhKey);
+		return productDao.getProductByKey(adClientid,srhKey);
 	}
 
 }
