@@ -123,4 +123,74 @@ public class StocktakingController {
 		
 		return ret;
 	}
+
+	@RequestMapping(value = "/stocktaking/detail/new", method = RequestMethod.GET)
+	public ModelAndView showInputPage(@RequestParam("locator") String locatorId,HttpServletRequest request) {
+		ModelAndView model = null;
+		int i_locator_id = 0;
+		
+		try{
+			if(StringUtils.isEmpty(locatorId)){
+				model = new ModelAndView("redirect:/stocktaking");
+				model.addObject("error", "err.stocktaking.locatorId");
+				return model;
+			}
+			
+			i_locator_id = Integer.valueOf(locatorId);
+		}catch(Exception ex){
+			// Cannot Parse Locator
+			model = new ModelAndView("redirect:/stocktaking");
+			model.addObject("error", "err.stocktaking.parsing");
+			return model;
+		}
+		
+		Locator locator = getLocator(i_locator_id , WebSession.getDefaultWarehouse(request));
+		if(locator == null){
+			// Cannot Find Locator
+			model = new ModelAndView("redirect:/stocktaking");
+			model.addObject("error", "err.stocktaking.locator");
+			return model;
+		}
+		
+		model = new ModelAndView();
+		model.setViewName("stocktaking-new");
+		model.addObject("locator", locator);
+		
+		return model;
+	}
+
+	@RequestMapping(value = "/stocktaking/detail/add", method = RequestMethod.POST)
+	public ModelAndView addNewLine(@RequestParam("locator") String locatorId,HttpServletRequest request) {
+		ModelAndView model = null;
+		int i_locator_id = 0;
+		
+		try{
+			if(StringUtils.isEmpty(locatorId)){
+				model = new ModelAndView("redirect:/stocktaking");
+				model.addObject("error", "err.stocktaking.locatorId");
+				return model;
+			}
+			
+			i_locator_id = Integer.valueOf(locatorId);
+		}catch(Exception ex){
+			// Cannot Parse Locator
+			model = new ModelAndView("redirect:/stocktaking");
+			model.addObject("error", "err.stocktaking.parsing");
+			return model;
+		}
+		
+		Locator locator = getLocator(i_locator_id , WebSession.getDefaultWarehouse(request));
+		if(locator == null){
+			// Cannot Find Locator
+			model = new ModelAndView("redirect:/stocktaking");
+			model.addObject("error", "err.stocktaking.locator");
+			return model;
+		}
+		
+		model = new ModelAndView();
+		model.setViewName("stocktaking-new");
+		model.addObject("locator", locator);
+		
+		return model;
+	}
 }

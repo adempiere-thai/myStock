@@ -24,6 +24,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import th.co.cenos.model.User;
+import th.co.cenos.model.Warehouse;
 
 /**
  * @function myStock
@@ -42,9 +43,22 @@ public class AuthenticationInterceptor extends HandlerInterceptorAdapter {
 
 		logger.info(request.getRequestURI());
 
-		User loginData = (User) request.getSession().getAttribute(WebSession._LOGIN_USER);
+		User loginData = WebSession.getLoginUser(request);
 		if (loginData == null) {
 			response.sendRedirect(request.getContextPath()+"/login.jsp");
+			return false;
+		}
+		
+		Warehouse warehouse = WebSession.getDefaultWarehouse(request);
+		/* 1. Home & Another Warehouse Null
+		 *    
+		 * 2. default POST Warehouse NULL
+		 * 
+		 * */
+		
+		if(warehouse == null &!(request.getContextPath()+"/default").equals(request.getRequestURI()))
+		{
+			response.sendRedirect(request.getContextPath()+"/default");
 			return false;
 		}
 		

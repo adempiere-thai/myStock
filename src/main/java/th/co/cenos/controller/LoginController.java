@@ -129,6 +129,25 @@ public class LoginController {
 		return model;
 	}
 	
+	@RequestMapping(value = "/default", method = RequestMethod.GET)
+	public ModelAndView defaultPage( HttpServletRequest request) {
+		ModelAndView model = null;
+
+		User user = WebSession.getLoginUser(request);
+		
+		if(user == null){
+			model = new ModelAndView("redirect:/login.jsp");
+			model.addObject("error", "err.login.failure");
+			return model;
+		}
+		
+		model = new ModelAndView();
+		model.setViewName("default");
+		model.addObject("warehouseL", securityService.getUserWarehouse(user));
+		
+		return model;
+	}
+	
 	@RequestMapping(value = "/default", method = RequestMethod.POST)
 	public ModelAndView defaultValue(@RequestParam("wh") String warehouseId , HttpServletRequest request) {
 		ModelAndView model = null;

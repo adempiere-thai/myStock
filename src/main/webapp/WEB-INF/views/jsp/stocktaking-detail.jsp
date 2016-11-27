@@ -9,7 +9,7 @@
 	<div id="stocktaking-detail" data-role="page" data-theme="a">
 		<div data-role="header" data-position="fixed">
 			<h2><spring:message code="label.itemList" text="label.itemList"/></h2>
-			<a id="countItem" href="${pageContext.request.contextPath}/stocktaking/detail/new" class="ui-btn ui-corner-all ui-btn-inline ui-mini ui-btn-icon-right ui-btn-icon-notext ui-icon-plus ui-btn-right btn-success" data-transition="slide">&nbsp;</a>
+			<a id="countItem" href="${pageContext.request.contextPath}/stocktaking/detail/new?locator=${locator.locatorId}" data-ajax="false" class="ui-btn ui-corner-all ui-btn-inline ui-mini ui-btn-icon-right ui-btn-icon-notext ui-icon-plus ui-btn-right btn-success" data-transition="slide">&nbsp;</a>
 		</div>
 		
 		<div role="main" class="ui-content">
@@ -34,26 +34,26 @@
 			</ul>
 		</div>
 		<div id="step-block" data-role="footer" data-position="fixed">
-			<a id="prevStep" href="#" class="ui-btn ui-corner-all ui-btn-inline ui-mini ui-btn-icon-left ui-icon-carat-l ui-btn-left btn-primary" data-direction="reverse">Prev</a>
-			<h4>Step 2 of 2</h4>
-			<a  id="save"  href="#" class="ui-btn ui-corner-all ui-btn-inline ui-mini ui-btn-icon-right ui-btn-icon-notext ui-icon-check ui-btn-right btn-success" data-rel="popup">&nbsp;</a>
+			<a id="prevStep" href="${pageContext.request.contextPath}/stocktaking" data-ajax="false" class="ui-btn ui-corner-all ui-btn-inline ui-mini ui-btn-icon-left ui-icon-carat-l ui-btn-left btn-primary" data-direction="reverse"><spring:message code="btn.prev" text="btn.prev" /></a>
+			<h4><spring:message code="msg.step" arguments="2,2" htmlEscape="false" argumentSeparator=","/></h4>
+			<a  id="save" href="${pageContext.request.contextPath}/home" data-ajax="false" class="ui-btn ui-corner-all ui-btn-inline ui-mini ui-btn-icon-right ui-btn-icon-notext ui-icon-check ui-btn-right btn-success" data-rel="popup">&nbsp;</a>
 		</div>
 		
-		<div data-role="popup" id="editPriceDialog" data-theme="a" data-overlay-theme="b" class="ui-corner-all" data-dismissible="false" style="width:260px;">
+		<div data-role="popup" id="editQty" data-theme="a" data-overlay-theme="b" class="ui-corner-all" data-dismissible="false" style="width:260px;">
 			<form action="#" method="get">
 				<div style="padding:10px 20px;">
-					<label for="price" class="ui-hidden-accessible">Price:</label>
+					<label for="price" class="ui-hidden-accessible"><spring:message code="label.count.qty" text="label.count.qty" /></label>
 					<input type="text" name="price" id="price" value="1" autocomplete="off" data-mini="true" />
-					<a href="javascript:void(0);" class="ui-btn ui-corner-all ui-btn-inline ui-mini" data-rel="back">Cancel</a>
-					<button type="submit" class="ui-btn ui-corner-all ui-btn-inline ui-mini btn-primary">Edit</button>
+					<a href="javascript:void(0);" class="ui-btn ui-corner-all ui-btn-inline ui-mini" data-rel="back"><spring:message code="btn.cancel" text="btn.cancel" /></a>
+					<button type="submit" class="ui-btn ui-corner-all ui-btn-inline ui-mini btn-primary"><spring:message code="btn.edit" text="btn.edit" /></button>
 				</div>
 			</form>
 		</div>
 		
 		<div data-role="popup" id="deleteDialog" data-theme="none" data-overlay-theme="b" data-transition="slideup" data-position-to="#step-block" data-dismissible="false" style="width:260px;">
 			<div data-role="controlgroup">
-				<a href="#" class="ui-btn ui-corner-all ui-mini cancel-txt" data-rel="back" data-transition="flow">Remove Item</a>
-				<a href="#" class="ui-btn ui-corner-all ui-mini" data-rel="back">Cancel</a>
+				<a href="#" class="ui-btn ui-corner-all ui-mini cancel-txt" data-rel="back" data-transition="flow"><spring:message code="btn.removeItem" text="btn.removeItem" /></a>
+				<a href="#" class="ui-btn ui-corner-all ui-mini" data-rel="back"><spring:message code="btn.cancel" text="btn.cancel" /></a>
 			</div>
 		</div>
 	</div>

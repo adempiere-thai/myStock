@@ -29,7 +29,7 @@
 			</form>
 		</div>
 		<div id="step-block" data-role="footer" data-position="fixed">
-			<h4>Step 1 of 2</h4>
+			<h4><spring:message code="msg.step" arguments="1,2" htmlEscape="false" argumentSeparator=","/></h4>
 			<button id="stocktakingDetail" class="ui-btn ui-corner-all ui-btn-inline ui-mini ui-btn-icon-right ui-icon-carat-r ui-btn-right btn-primary"
 				data-transition="slide"><spring:message code="btn.next" text="btn.next" /></button>
 		</div>
