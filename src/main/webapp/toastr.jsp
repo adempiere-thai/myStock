@@ -6,13 +6,19 @@
 <%
 boolean isError = false;
 String error = "";
+String errParams = ""; 
 if(request.getParameter("error") != null || request.getAttribute("error") != null){
 	isError = true;
 	error = (String)(request.getParameter("error") !=null ? request.getParameter("error") : request.getAttribute("error"));
+	
+	if(request.getParameter("errParams") != null || request.getAttribute("errParams") != null){ 
+		errParams =  (String)(request.getParameter("errParams") !=null ? request.getParameter("errParams") : request.getAttribute("errParams"));
+	}
 }
 
 pageContext.setAttribute("isError", isError);
 pageContext.setAttribute("error",error);
+pageContext.setAttribute("errParams",errParams);
 %>
 <c:if test="${isError}" >
 	<!-- toastr -->
@@ -39,6 +45,6 @@ pageContext.setAttribute("error",error);
 				"showMethod": "fadeIn",
 				"hideMethod": "fadeOut"
 			};
-			toastr.error('<spring:message code="${error}" />', 'Error');
+			toastr.error('<spring:message code="${error}" arguments="${errParams}" htmlEscape="false" argumentSeparator="," />', 'Error');
 	</script>
 </c:if>

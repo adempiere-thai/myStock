@@ -36,4 +36,6 @@ public interface ProductService {
 	public Product getProductByKey(int adClientId ,String srhKey);
 	
 	public AttributeSetInstance getAttributeSetInstanceById(int attributeSetInstanceId);
+	
+	public boolean isProductASI(Product product , AttributeSetInstance asi);
 }

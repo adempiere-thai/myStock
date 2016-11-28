@@ -121,7 +121,7 @@ public class ProductController {
 		Product product = null;
 		String jsonString = null;
 		
-		product = productService.getProductByKey(srhKey);
+		product = productService.getProductByKey(user.getAdClientId(),srhKey);
 		jsonString = toJsonString(product);
 		
 		return returnJson(jsonString);

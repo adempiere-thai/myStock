@@ -187,11 +187,11 @@ hr {
 	text-shadow: 0 1px 0 #f3f3f3;
 }
 
-#items-in-order-list li .action-block {
+#items-list li .action-block {
 	display: none;
 }
 
-#items-in-order-list li.focus .action-block {
+#items-list li.focus .action-block {
 	display: block !important;
 }
 

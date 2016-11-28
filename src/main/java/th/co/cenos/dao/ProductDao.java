@@ -18,6 +18,7 @@ package th.co.cenos.dao;
 
 import java.util.List;
 
+import th.co.cenos.model.AttributeSetInstance;
 import th.co.cenos.model.Product;
 
 /**
@@ -33,4 +34,6 @@ public interface ProductDao {
 	public Product getProductById(int productId);
 
 	public Product getProductByKey(int adClientid, String srhKey);
+
+	public boolean isProductASI(Product product, AttributeSetInstance asi);
 }

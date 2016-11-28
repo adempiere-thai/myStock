@@ -37,6 +37,8 @@ public class AttributeSetInstance implements Serializable {
 	private String lotNo;
 	private String attributeSet;
 	
+	private String asiId;
+	
 	public int getAttributeSetInstanceId() {
 		return attributeSetInstanceId;
 	}
@@ -60,6 +62,12 @@ public class AttributeSetInstance implements Serializable {
 	}
 	public void setAttributeSet(String attributeSet) {
 		this.attributeSet = attributeSet;
+	}
+	public String getAsiId() {
+		return asiId;
+	}
+	public void setAsiId(String asiId) {
+		this.asiId = asiId;
 	}
 
 }

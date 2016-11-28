@@ -27,6 +27,7 @@ import org.springframework.stereotype.Repository;
 
 import th.co.cenos.dao.AbstractDao;
 import th.co.cenos.dao.ProductDao;
+import th.co.cenos.model.AttributeSetInstance;
 import th.co.cenos.model.Product;
 
 /**
@@ -59,7 +60,7 @@ public class ProductDaoImp extends AbstractDao implements ProductDao {
 				.append("\t\tWHERE stk.AD_Client_Id = ? AND stk.M_Warehouse_id = ? \n")
 				.append("\t\tAND (stk.product_name like ? or stk.value like ? ) \n")
 				.append("\t\tGROUP BY stk.m_product_id , stk.value ,  stk.product_name, stk.IsStocked ) stock \n")
-				.append("ORDER BY stk.value  , stock.IsStocked DESC , stock.qtyavailable DESC ");
+				.append("ORDER BY stock.product_value , stock.IsStocked DESC , stock.qtyavailable DESC ");
 
 		try {
 			conn = getConnection();
@@ -170,6 +171,44 @@ public class ProductDaoImp extends AbstractDao implements ProductDao {
 		}
 
 		return product;
+	}
+
+	/* (non-Javadoc)
+	 * @see th.co.cenos.dao.ProductDao#isProductASI(th.co.cenos.model.Product, th.co.cenos.model.AttributeSetInstance)
+	 */
+	@Override
+	public boolean isProductASI(Product product, AttributeSetInstance asi) {
+		// TODO Auto-generated method stub
+		Connection conn = null;
+		PreparedStatement ppstmt = null;
+		ResultSet rset = null;
+		
+		boolean ret = false;
+		
+		StringBuffer productSQL = new StringBuffer(
+			"SELECT * FROM M_Storage st WHERE st.M_Product_Id = ? AND st.M_AttributeSetInstance_Id = ? ");
+
+		try {
+			conn = getConnection();
+			ppstmt = conn.prepareStatement(productSQL.toString());
+
+			int paramIdx = 1;
+			ppstmt.setInt(paramIdx++, product.getProductId());
+			ppstmt.setInt(paramIdx++, asi.getAttributeSetInstanceId());
+
+			rset = ppstmt.executeQuery();
+			if (rset.next()) {
+				ret = true;
+			}
+		} catch (Exception ex) {
+			logger.error("Login Error");
+			ex.printStackTrace();
+		} finally {
+			dbObjClosed(rset);
+			dbObjClosed(ppstmt);
+		}
+		
+		return ret;
 	}
 
 }

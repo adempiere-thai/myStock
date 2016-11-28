@@ -74,4 +74,13 @@ public class ProductServiceImp implements ProductService {
 		return productDao.getProductByKey(adClientid,srhKey);
 	}
 
+	/* (non-Javadoc)
+	 * @see th.co.cenos.services.ProductService#isProductASI(th.co.cenos.model.Product, th.co.cenos.model.AttributeSetInstance)
+	 */
+	@Override
+	public boolean isProductASI(Product product, AttributeSetInstance asi) {
+		// TODO Auto-generated method stub
+		return productDao.isProductASI(product ,asi );
+	}
+
 }

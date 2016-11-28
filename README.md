@@ -6,3 +6,6 @@ Objective : This project was created to support the stocktaking operation via mo
 Developed by : CENS Online Service
 Website : adempiere-thai.net
 
+Installation Guide
+1. Modified URIEncode = 'UTF-8'
+2. Modified application.xml for new context /myStock  

@@ -13,16 +13,16 @@
 		</div>
 		
 		<div role="main" class="ui-content">
-			<ul id="items-in-order-list" data-role="listview" data-inset="false">
+			<ul id="items-list" data-role="listview" data-inset="false">
 				<c:forEach items="${detailL}" var="line">
 					<li class="items-in-order-item">
-						<h3>{line.product.productSrhKey} {line.product.productName}</h3>
+						<h3>${line.product.productSrhKey} ${line.product.productName}</h3>
 						<div class="ui-grid-a">
 							<div class="ui-block-a" style="width:70%">
-								<p>{line.asi.description}</p>
+								<p>${line.asi.description}</p>
 							</div><!-- .ui-block-a -->
 							<div class="ui-block-b" style="width:30%">
-								<p class="text-right">{line.asi.countQty}</p>
+								<p class="text-right"><span class="ui-li-count">${line.countQty} pcs</span> </p>
 							</div><!-- .ui-block-b -->
 						</div><!-- .ui-grid-a -->
 						<div class="action-block">
@@ -30,7 +30,7 @@
 							<button type="button" class="ui-btn ui-corner-all ui-btn-inline ui-mini btn-danger delete-btn" data-rel="popup">Delete</button>
 						</div>
 					</li>
-				</c:forEach>	
+				</c:forEach>
 			</ul>
 		</div>
 		<div id="step-block" data-role="footer" data-position="fixed">
@@ -60,6 +60,6 @@
 	
 	<!-- Page Javascript -->
 	<script
-		src="${pageContext.request.contextPath}/resources/js/stocktaking2.js"></script>
+		src="${pageContext.request.contextPath}/resources/js/stocktaking-detail.js"></script>
 </body>
 </html>

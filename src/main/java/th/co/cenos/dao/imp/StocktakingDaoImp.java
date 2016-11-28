@@ -19,6 +19,7 @@ package th.co.cenos.dao.imp;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,6 +35,7 @@ import th.co.cenos.model.Stocktaking;
 import th.co.cenos.model.StocktakingLine;
 import th.co.cenos.model.User;
 import th.co.cenos.model.Warehouse;
+import th.co.cenos.utils.ADSequenceUtil;
 
 /**
  * @function myStock
@@ -136,7 +138,7 @@ public class StocktakingDaoImp  extends AbstractDao implements StocktakingDao {
 		int ret = 0;
 		
 		if(line.getStocktakingLineId() == 0){
-			ret = insertStocktakingLine(line);
+			ret = insertStocktakingLine(line,user);
 		}
 		else{
 			//ret = updateStocktakingLine(line);
@@ -148,9 +150,10 @@ public class StocktakingDaoImp  extends AbstractDao implements StocktakingDao {
 	
 	/**
 	 * @param line
+	 * @param user 
 	 * @return
 	 */
-	private int insertStocktakingLine(StocktakingLine line) {
+	private int insertStocktakingLine(StocktakingLine line, User user) {
 		// TODO Auto-generated method stub
 		int ret = 0;
 		Connection conn = null;
@@ -158,65 +161,38 @@ public class StocktakingDaoImp  extends AbstractDao implements StocktakingDao {
 		ResultSet rset = null;
 		
 		StringBuffer insertLineSQL = new StringBuffer("INSERT INTO ext_stocktakingline(ext_stocktakingline_id, ext_stocktaking_id, ad_client_id, ad_org_id , \n");
-		insertLineSQL.append("\t\tcreatedby , line , m_locator_id, m_product_id, m_attributesetinstance_id, qtycount) \n")
-			.append("VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ");
+		insertLineSQL.append("\t\tcreatedby , updatedby , line , m_locator_id, m_product_id, m_attributesetinstance_id, qtycount) \n")
+			.append("VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ? , ? ) ");
 		
 		try {
 			conn = getConnection();
-			ppstmt = conn.prepareStatement(stkSQL.toString());
+			ppstmt = conn.prepareStatement(insertLineSQL.toString());
 			int paramIdx = 1;
-			ppstmt.setInt(paramIdx++, warehouse.getWarehouseId());
-			rset = ppstmt.executeQuery();
-			while(rset.next()){
-				if(stocktaking == null){
-					stocktaking = new Stocktaking();
-					stocktaking.setStocktakingId(rset.getInt("Ext_Stocktaking_Id"));
-					
-					// Intial List
-					stkLineL = new ArrayList<StocktakingLine>();
-				}
-				
-				// Check Warehouse was set Locator
-				if(rset.getInt("Ext_StocktakingLine_ID") >0 ){
-					StocktakingLine line = new StocktakingLine();
-					line.setStocktakingLineId(rset.getInt("Ext_StocktakingLine_ID"));
-					line.setLineNo(rset.getInt("Line"));
-					
-					// Set Product
-					Product product = new Product();
-					product.setProductId(rset.getInt("M_Product_Id"));
-					product.setProductSrhKey(rset.getString("ProductKey"));
-					product.setProductName(rset.getString("ProductName"));
-					
-					line.setProduct(product);
-					
-					// Set ASI
-					if(rset.getInt("M_AttributeSetInstance_Id") > 0){
-						AttributeSetInstance asi = new AttributeSetInstance();
-						asi.setAttributeSetInstanceId(rset.getInt("M_AttributeSetInstance_Id"));
-						asi.setDescription(rset.getString("Description"));
-						asi.setLotNo(rset.getString("Lot"));
-						
-						line.setAsi(asi);
-					}
-						
-					// Set Locator
-					Locator locator = new Locator();
-					locator.setLocatorId(rset.getInt("M_Locator_id"));
-					locator.setLocatorKey(rset.getString("locatorKey"));
-					line.setLocator(locator);
-					
-					line.setCountQty(rset.getBigDecimal("qtycount"));
-					
-					stkLineL.add(line);
-				}
-			}
+			// Set Insert Value
+			// ext_stocktakingline_id, ext_stocktaking_id, ad_client_id, ad_org_id ,
+			// createdby , updatedby, line , m_locator_id, m_product_id, m_attributesetinstance_id, qtycount
 			
-			if(stocktaking != null){
-				stocktaking.setLineL(stkLineL);
-			}
+			int nextId = ADSequenceUtil.getNextId("Ext_StocktakingLine");
+			
+			ppstmt.setInt(paramIdx++, nextId);
+			ppstmt.setInt(paramIdx++, line.getStocktakingId());
+			ppstmt.setInt(paramIdx++, user.getAdClientId());
+			ppstmt.setInt(paramIdx++, line.getAdOrgId());
+			
+			ppstmt.setInt(paramIdx++, user.getUserId());
+			ppstmt.setInt(paramIdx++, user.getUserId());
+			ppstmt.setInt(paramIdx++, line.getLineNo());
+			ppstmt.setInt(paramIdx++, line.getLocator().getLocatorId());
+			ppstmt.setInt(paramIdx++, line.getProduct().getProductId());
+			if(line.getAsi() != null && line.getAsi().getAttributeSetInstanceId() >0)
+				ppstmt.setInt(paramIdx++, line.getAsi().getAttributeSetInstanceId());
+			else
+				ppstmt.setNull(paramIdx++,Types.INTEGER );
+			
+			ppstmt.setBigDecimal(paramIdx++, line.getCountQty());
+			ret = ppstmt.executeUpdate();
 		} catch (Exception ex) {
-			logger.error(String.format("Cannot get Stocktaking in Warehouse %s !",warehouse.getWarehouseName()));
+			logger.error(String.format("Cannot Save Stocktaking Line !"));
 			ex.printStackTrace();
 		} finally {
 			dbObjClosed(rset);

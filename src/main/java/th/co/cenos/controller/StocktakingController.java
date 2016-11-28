@@ -41,6 +41,7 @@ import th.co.cenos.model.User;
 import th.co.cenos.model.Warehouse;
 import th.co.cenos.services.ProductService;
 import th.co.cenos.services.SecurityService;
+import th.co.cenos.services.StocktakingService;
 import th.co.cenos.web.WebSession;
 
 /**
@@ -60,6 +61,9 @@ public class StocktakingController {
 	
 	@Autowired
 	SecurityService securityService;
+	
+	@Autowired
+	StocktakingService stocktakingService; 
 	
 	@RequestMapping(value = "/stocktaking", method = RequestMethod.GET)
 	public ModelAndView showStocktakingPage(HttpServletRequest request) {
@@ -180,45 +184,163 @@ public class StocktakingController {
 									@RequestParam("countQty") String countQty,
 									HttpServletRequest request) 
 	{
-		ModelAndView model = null;
+		ModelAndView model = new ModelAndView();
 		int i_locatorId = 0;
 		int i_asiId = 0;
 		BigDecimal bd_countQty = BigDecimal.ZERO;
-		
-		Locator locator = null;
+		StocktakingLine line = new StocktakingLine();
 		Product product = null;
 		AttributeSetInstance asi = null;
 		
-		StocktakingLine line = new StocktakingLine();
-		
-		/** Validate
-		 * 1. Check Required Field (Product , Count Qty)
-		 * 2. Check Input Value is correct value
-		 * 		2.1 Product is Existing in DB
-		 * 		2.2 IF HAVE ASI THEN CHECK ASI IS EXISTING
-		 * 		2.3 COUNT QTY IS NUMBER
-		 */
-		
 		User user = WebSession.getLoginUser(request);
+		Warehouse warehouse = WebSession.getDefaultWarehouse(request);
 		Stocktaking stocktaking = WebSession.getOpenedStocktaking(request);
 		
-		locator = securityService.getLocator(i_locatorId);
-		product = productService.getProductByKey(user.getAdClientId(),pdCode);
-		if(i_asiId > 0)
-			asi = productService.getAttributeSetInstanceById(i_asiId);
+		// Start Validation 
+		/* 1 Check Input Data Type*/
+		// 1.1 Locator Id
+		try{
+			i_locatorId = Integer.valueOf(locatorId);
+		}
+		catch(Exception ex){
+			model = new ModelAndView("redirect:/stocktaking");
+			model.addObject("error", "err.stocktaking.locator");
+			return model;
+		}
 		
+		Locator locator = getLocator(i_locatorId , WebSession.getDefaultWarehouse(request));
+		
+		// 1.2 asiId
+		if(!StringUtils.isEmpty(asiId)){
+			try{
+				i_asiId = Integer.valueOf(asiId);
+			}
+			catch(Exception ex){
+				model.setViewName("stocktaking-new");
+				model.addObject("stkLine", line);
+				model.addObject("locator", locator);
+				model.addObject("error", "err.stocktaking.parsing");
+				model.addObject("errParams", "ASI Id" );
+				return model;
+			}
+		}
+		
+		// 1.3 count qty
+		if(!StringUtils.isEmpty(countQty)){
+			try{
+				bd_countQty = new BigDecimal(countQty);
+			}
+			catch(Exception ex){
+				model.setViewName("stocktaking-new");
+				model.addObject("stkLine", line);
+				model.addObject("locator", locator);
+				model.addObject("error", "err.stocktaking.parsing");
+				model.addObject("errParams", "Count Qty" );
+				return model;
+			}
+		}
+		
+		// 2. Check Required Field
+		// 2.1 Required Product
+		if(StringUtils.isEmpty(pdCode)){
+			model.setViewName("stocktaking-new");
+			model.addObject("stkLine", line);
+			model.addObject("locator", locator);
+			model.addObject("error", "err.field.required");
+			model.addObject("errParams", "Product" );
+			return model;
+		}
+		
+		// 2.2 Required Count Qty
+		if(StringUtils.isEmpty(countQty)){
+			model.setViewName("stocktaking-new");
+			model.addObject("stkLine", line);
+			model.addObject("locator", locator);
+			model.addObject("error", "err.field.required");
+			model.addObject("errParams", "Count Qty" );
+			return model;
+		}
+		
+		// 3. Check value is existing in the DB
+		// 3.1 Product
+		product = productService.getProductByKey(user.getAdClientId(), pdCode);
+		if(product == null){
+			model.setViewName("stocktaking-new");
+			model.addObject("stkLine", line);
+			model.addObject("locator", locator);
+			model.addObject("error", "err.cannot.find.db");
+			model.addObject("errParams", "Product" );
+			return model;
+		}
+		
+		// 3.2 ASI
+		if(i_asiId > 0){
+			asi = productService.getAttributeSetInstanceById(i_asiId);
+			
+			if(asi == null){
+				model.setViewName("stocktaking-new");
+				model.addObject("stkLine", line);
+				model.addObject("locator", locator);
+				model.addObject("error", "err.cannot.find.db");
+				model.addObject("errParams", "ASI ID" );
+				return model;
+			}
+			
+			// Check asi is product asi
+			if(!productService.isProductASI(product, asi)){
+				model.setViewName("stocktaking-new");
+				model.addObject("stkLine", line);
+				model.addObject("locator", locator);
+				model.addObject("error", "err.not.product.asi");
+				model.addObject("errParams", product.getProductSrhKey()+":"+product.getProductName());
+				return model;
+			}
+		}
+		
+		
+		
+		// End Validation
+	
+		line.setAdOrgId(warehouse.getAdOrgId());
 		line.setProduct(product);
 		line.setAsi(asi);
 		line.setCountQty(bd_countQty);
 		line.setLocator(locator);
 		line.setStocktakingId(stocktaking.getStocktakingId());
+		line.setLineNo(getNextLineNo(stocktaking));
 		
+		int ret = stocktakingService.saveStocktakingLine(line, user);
+		// Handle Cannot Save Stocktaking Line
+		if(ret <= 0){
+			model.setViewName("stocktaking-new");
+			model.addObject("stkLine", line);
+			model.addObject("locator", locator);
+			model.addObject("error", "err.stocktaking.cannotSave");
+			return model;
+		}
+		
+		// Save Success 
+		// Reload Stocktaking in Session
+		stocktaking = stocktakingService.getOpenStocktaking(warehouse);
+		request.getSession().setAttribute(WebSession._STOCKTAKING_DOCUMENT, stocktaking);
 		
 		model = new ModelAndView();
-		model.setViewName("stocktaking-new");
-		model.addObject("locator", locator);
+		model.setViewName("redirect:/stocktaking/detail?locator="+locator.getLocatorId());
 		
 		return model;
+	}
+	
+	private int getNextLineNo(Stocktaking stocktaking){
+		int ret = 0;
+		List<StocktakingLine> lineL = stocktaking.getLineL();
+		for(StocktakingLine line : lineL){
+			if(line.getLineNo() > ret)
+				ret = line.getLineNo();
+		}
+		
+		ret +=10;
+				
+		return ret;
 	}
 	
 	

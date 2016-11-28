@@ -13,7 +13,7 @@
 		</div>
 		
 		<div role="main" class="ui-content">
-			<form id="countItemFrm" novalidate="novalidate" data-ajax="false" metohd="post" action="${pageContext.request.contextPath}/stocktaking/detail/add">
+			<form id="countItemFrm" novalidate="novalidate" data-ajax="false" method="post" action="${pageContext.request.contextPath}/stocktaking/detail/add">
         	<div class="ui-field-contain">
 				<label for="pdCode"><spring:message code="label.itemCode" text="label.itemCode" /></label>
 				<input type="text" name="pdCode" id="pdCode" class="required" value="${stkLine.product.productSrhKey}" placeholder="Please Scan Item Code" data-mini="true" />
@@ -23,7 +23,7 @@
             
             <div class="ui-field-contain">
 				<label for="asiId"><spring:message code="label.asiId" text="label.asiId" /></label>
-				<input type="text" name="asiId" id="asiId" class="required" value="${stkLine.asi.attributeSetInstanceId}" placeholder="Please Scan ASI Id" data-mini="true" />
+				<input type="text" name="asiId" id="asiId" class="required" value="${stkLine.asi.asiId}" placeholder="Please Scan ASI Id" data-mini="true" />
 			</div>
 			
 			<p id="asiDesc">${stkLine.asi.description}</p>
