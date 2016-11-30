@@ -296,9 +296,6 @@ public class StocktakingController {
 				return model;
 			}
 		}
-		
-		
-		
 		// End Validation
 	
 		line.setAdOrgId(warehouse.getAdOrgId());
@@ -343,5 +340,71 @@ public class StocktakingController {
 		return ret;
 	}
 	
+	@RequestMapping(value = "/stocktaking/detail/edit", method = RequestMethod.POST)
+	public ModelAndView editLine(@RequestParam("editLineId") String lineId,
+			@RequestParam("editQty") String qty,
+			@RequestParam("editLocatorId") String locatorId,
+			HttpServletRequest request)
+	{
+		// Validate Qty
+		ModelAndView model = new ModelAndView();
+		model.setViewName("stocktaking-detail");
+		Stocktaking stocktaking = null;
+		Locator locator = null;
+		Warehouse warehouse = WebSession.getDefaultWarehouse(request);
+		User user = WebSession.getLoginUser(request);
+		BigDecimal bd_countQty = BigDecimal.ZERO;
+		int i_lineId = 0;
+		int i_locatorId = 0;
+		boolean isError = false;
+		
+		// Validate
+		// 1. Check Input Qty Data Type
+		if(!StringUtils.isEmpty(qty)){
+			try{
+				bd_countQty = new BigDecimal(qty);
+				i_lineId = Integer.valueOf(lineId);
+				i_locatorId = Integer.valueOf(locatorId);
+			}
+			catch(Exception ex){
+				model.addObject("error", "err.stocktaking.parsing");
+				model.addObject("errParams", " Count Qty" );
+				isError = true;
+			}
+		}
+		
+		// 2. Check Required
+		if(StringUtils.isEmpty(qty)){
+			model.addObject("error", "err.field.required");
+			model.addObject("errParams", "Count Qty" );
+			isError = true;
+		}
+		
+		if(!isError){
+			int ret = stocktakingService.updayeQty(i_lineId,bd_countQty , user);
+			
+			if(ret > 0){
+				stocktaking = stocktakingService.getOpenStocktaking(warehouse);
+				request.getSession().setAttribute(WebSession._STOCKTAKING_DOCUMENT, stocktaking);
+			}
+		}
+		
+		locator = securityService.getLocator(i_locatorId);
+		
+		List<StocktakingLine> detailL = new ArrayList<StocktakingLine>();
+		for(StocktakingLine line : stocktaking.getLineL()){
+			if(line.getLocator().getLocatorId() == locator.getLocatorId())
+				detailL.add(line);
+		}
+		
+		model.addObject("detailL", detailL);
+		model.addObject("locator", locator);
+
+		return model;		
+	}
 	
+	@RequestMapping(value = "/stocktaking/detail/edit", method = RequestMethod.POST)
+	public ModelAndView editLine(@RequestParam("delLineId") String lineId,
+			HttpServletRequest request)
+	{
 }

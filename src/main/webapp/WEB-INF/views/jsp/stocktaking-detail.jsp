@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ page isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <html>
 <jsp:include page="../../../head.jsp"></jsp:include>
@@ -22,12 +23,12 @@
 								<p>${line.asi.description}</p>
 							</div><!-- .ui-block-a -->
 							<div class="ui-block-b" style="width:30%">
-								<p class="text-right"><span class="ui-li-count">${line.countQty} pcs</span> </p>
+								<p class="text-right"><span class="ui-li-count"> <fmt:formatNumber type="number" maxFractionDigits="0" value="${line.countQty}" /> pcs</span> </p>
 							</div><!-- .ui-block-b -->
 						</div><!-- .ui-grid-a -->
 						<div class="action-block">
-							<button type="button" class="ui-btn ui-corner-all ui-btn-inline ui-mini btn-success edit-price-btn" data-rel="popup">Edit</button>
-							<button type="button" class="ui-btn ui-corner-all ui-btn-inline ui-mini btn-danger delete-btn" data-rel="popup">Delete</button>
+							<button edit_id="${line.stocktakingLineId}" edit_qty="${line.countQty}" type="button" class="ui-btn ui-corner-all ui-btn-inline ui-mini btn-success edit-qty-btn" data-rel="popup">Edit</button>
+							<button del_id="${line.stocktakingLineId}" type="button" class="ui-btn ui-corner-all ui-btn-inline ui-mini btn-danger delete-btn" data-rel="popup">Delete</button>
 						</div>
 					</li>
 				</c:forEach>
@@ -40,10 +41,12 @@
 		</div>
 		
 		<div data-role="popup" id="editQty" data-theme="a" data-overlay-theme="b" class="ui-corner-all" data-dismissible="false" style="width:260px;">
-			<form action="#" method="get">
+			<form action="${pageContext.request.contextPath}/stocktaking/detail/edit" method="POST">
 				<div style="padding:10px 20px;">
-					<label for="price" class="ui-hidden-accessible"><spring:message code="label.count.qty" text="label.count.qty" /></label>
-					<input type="text" name="price" id="price" value="1" autocomplete="off" data-mini="true" />
+					<label for="editQty" class="ui-hidden-accessible"><spring:message code="label.count.qty" text="label.count.qty" /></label>
+					<input type="number" name="editQty" id="editQty" value="1" autocomplete="off" data-mini="true" />
+					<input type="hidden" name="editLineId" id="editLineId"  />
+					<input type="hidden" name="editLocatorId" id="editLocatorId" value="${locator.locatorId}" /> 
 					<a href="javascript:void(0);" class="ui-btn ui-corner-all ui-btn-inline ui-mini" data-rel="back"><spring:message code="btn.cancel" text="btn.cancel" /></a>
 					<button type="submit" class="ui-btn ui-corner-all ui-btn-inline ui-mini btn-primary"><spring:message code="btn.edit" text="btn.edit" /></button>
 				</div>
@@ -51,12 +54,17 @@
 		</div>
 		
 		<div data-role="popup" id="deleteDialog" data-theme="none" data-overlay-theme="b" data-transition="slideup" data-position-to="#step-block" data-dismissible="false" style="width:260px;">
+			<form action="${pageContext.request.contextPath}/stocktaking/detail/delete" method="POST">
+			<input type="hidden" name="delLineId" id="delLineId"  />
+			<input type="hidden" name="delLocatorId" id="delLocatorId" value="${locator.locatorId}" />
 			<div data-role="controlgroup">
 				<a href="#" class="ui-btn ui-corner-all ui-mini cancel-txt" data-rel="back" data-transition="flow"><spring:message code="btn.removeItem" text="btn.removeItem" /></a>
 				<a href="#" class="ui-btn ui-corner-all ui-mini" data-rel="back"><spring:message code="btn.cancel" text="btn.cancel" /></a>
 			</div>
+			</form>
 		</div>
 	</div>
+	
 	
 	<!-- Page Javascript -->
 	<script

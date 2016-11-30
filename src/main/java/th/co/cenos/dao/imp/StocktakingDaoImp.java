@@ -16,6 +16,7 @@
  *****************************************************************************/
 package th.co.cenos.dao.imp;
 
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -204,9 +205,61 @@ public class StocktakingDaoImp  extends AbstractDao implements StocktakingDao {
 	}
 
 	@Override
-	public int deleteStocktakingLine() {
+	public int deleteStocktakingLine(int lineId) {
+		int ret = 0;
+		Connection conn = null;
+		PreparedStatement ppstmt = null;
+		
+		StringBuffer updateSQL = new StringBuffer("DELETE FROM ext_stocktakingline WHERE ext_stocktakingline_id = ? \n");
+		
+		try {
+			conn = getConnection();
+			ppstmt = conn.prepareStatement(updateSQL.toString());
+			int paramIdx = 1;
+
+			ppstmt.setInt(paramIdx++, lineId);
+			
+			ret = ppstmt.executeUpdate();
+		} catch (Exception ex) {
+			logger.error(String.format("Cannot Remove Stocktaking Line !"));
+			ex.printStackTrace();
+		} finally {
+			dbObjClosed(ppstmt);
+		}
+		
+		return ret;
+	}
+
+	/* (non-Javadoc)
+	 * @see th.co.cenos.dao.StocktakingDao#updateQty(int, java.math.BigDecimal, th.co.cenos.model.User)
+	 */
+	@Override
+	public int updateQty(int i_lineId, BigDecimal bd_countQty, User user) {
 		// TODO Auto-generated method stub
-		return 0;
+		int ret = 0;
+		Connection conn = null;
+		PreparedStatement ppstmt = null;
+		
+		StringBuffer updateSQL = new StringBuffer("UPDATE ext_stocktakingline SET qtycount = ? ,updatedby = ? ,updated = now() WHERE ext_stocktakingline_id = ? \n");
+		
+		try {
+			conn = getConnection();
+			ppstmt = conn.prepareStatement(updateSQL.toString());
+			int paramIdx = 1;
+						
+			ppstmt.setBigDecimal(paramIdx++, bd_countQty);
+			ppstmt.setInt(paramIdx++, user.getUserId());
+			ppstmt.setInt(paramIdx++, i_lineId);
+			
+			ret = ppstmt.executeUpdate();
+		} catch (Exception ex) {
+			logger.error(String.format("Cannot Update Stocktaking Line !"));
+			ex.printStackTrace();
+		} finally {
+			dbObjClosed(ppstmt);
+		}
+		
+		return ret;
 	}
 	
 	

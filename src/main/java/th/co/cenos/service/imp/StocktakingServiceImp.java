@@ -16,6 +16,8 @@
  *****************************************************************************/
 package th.co.cenos.service.imp;
 
+import java.math.BigDecimal;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -51,6 +53,24 @@ public class StocktakingServiceImp implements StocktakingService {
 	public int saveStocktakingLine(StocktakingLine line , User user) {
 		// TODO Auto-generated method stub
 		return stocktakingDao.saveStocktakingLine(line , user);
+	}
+
+	/* (non-Javadoc)
+	 * @see th.co.cenos.services.StocktakingService#updayeQty(int, java.math.BigDecimal, th.co.cenos.model.User)
+	 */
+	@Override
+	public int updayeQty(int i_lineId, BigDecimal bd_countQty, User user) {
+		// TODO Auto-generated method stub
+		return stocktakingDao.updateQty(i_lineId,bd_countQty,user);
+	}
+
+	/* (non-Javadoc)
+	 * @see th.co.cenos.services.StocktakingService#deleteStocktakingLine(int)
+	 */
+	@Override
+	public int deleteStocktakingLine(int lineId) {
+		// TODO Auto-generated method stub
+		return stocktakingDao.deleteStocktakingLine(lineId);
 	}
 
 }

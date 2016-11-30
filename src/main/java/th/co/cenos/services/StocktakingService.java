@@ -1,5 +1,7 @@
 package th.co.cenos.services;
 
+import java.math.BigDecimal;
+
 import th.co.cenos.model.Stocktaking;
 import th.co.cenos.model.StocktakingLine;
 import th.co.cenos.model.User;
@@ -16,4 +18,8 @@ public interface StocktakingService {
 	public Stocktaking getOpenStocktaking(Warehouse warehouse);
 	
 	public int saveStocktakingLine(StocktakingLine line , User user);
+
+	public int deleteStocktakingLine(int lineId);
+	
+	public int updayeQty(int i_lineId, BigDecimal bd_countQty, User user);
 }
