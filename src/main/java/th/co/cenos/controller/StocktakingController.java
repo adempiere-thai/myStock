@@ -349,11 +349,11 @@ public class StocktakingController {
 		// Validate Qty
 		ModelAndView model = new ModelAndView();
 		model.setViewName("stocktaking-detail");
-		Stocktaking stocktaking = null;
-		Locator locator = null;
 		Warehouse warehouse = WebSession.getDefaultWarehouse(request);
+		Stocktaking stocktaking = WebSession.getOpenedStocktaking(request);
 		User user = WebSession.getLoginUser(request);
 		BigDecimal bd_countQty = BigDecimal.ZERO;
+		Locator locator = null;
 		int i_lineId = 0;
 		int i_locatorId = 0;
 		boolean isError = false;
@@ -387,9 +387,12 @@ public class StocktakingController {
 				stocktaking = stocktakingService.getOpenStocktaking(warehouse);
 				request.getSession().setAttribute(WebSession._STOCKTAKING_DOCUMENT, stocktaking);
 			}
+			else{
+				model.addObject("error", "err.cannot.update.qty");
+			}
 		}
 		
-		locator = securityService.getLocator(i_locatorId);
+		locator = getLocator(i_locatorId, warehouse);
 		
 		List<StocktakingLine> detailL = new ArrayList<StocktakingLine>();
 		for(StocktakingLine line : stocktaking.getLineL()){
@@ -403,8 +406,43 @@ public class StocktakingController {
 		return model;		
 	}
 	
-	@RequestMapping(value = "/stocktaking/detail/edit", method = RequestMethod.POST)
-	public ModelAndView editLine(@RequestParam("delLineId") String lineId,
+	@RequestMapping(value = "/stocktaking/detail/delete", method = RequestMethod.POST)
+	public ModelAndView deleteLine(@RequestParam("delLineId") String lineId,
+			@RequestParam("delLocatorId") String locatorId,
 			HttpServletRequest request)
 	{
+		ModelAndView model = new ModelAndView();
+		model.setViewName("stocktaking-detail");
+		Warehouse warehouse = WebSession.getDefaultWarehouse(request);
+		Stocktaking stocktaking = WebSession.getOpenedStocktaking(request);
+		Locator locator = null;
+
+		int i_lineId = Integer.valueOf(lineId);
+		int i_locatorId = Integer.valueOf(locatorId);
+		
+		int ret = stocktakingService.deleteStocktakingLine(i_lineId);
+ 
+		if(ret > 0){
+			stocktaking = stocktakingService.getOpenStocktaking(warehouse);
+			request.getSession().setAttribute(WebSession._STOCKTAKING_DOCUMENT, stocktaking);
+		}
+		else{
+			model.addObject("error", "err.cannot.delete");
+			model.addObject("errParams", "Stocktaking Line" );
+		}
+		
+		locator = getLocator(i_locatorId, warehouse);
+		
+		List<StocktakingLine> detailL = new ArrayList<StocktakingLine>();
+		for(StocktakingLine line : stocktaking.getLineL()){
+			if(line.getLocator().getLocatorId() == locator.getLocatorId())
+				detailL.add(line);
+		}
+		
+		
+		model.addObject("detailL", detailL);
+		model.addObject("locator", locator);
+
+		return model;		
+	}
 }
