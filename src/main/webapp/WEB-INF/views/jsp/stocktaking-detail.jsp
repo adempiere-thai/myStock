@@ -27,8 +27,8 @@
 							</div><!-- .ui-block-b -->
 						</div><!-- .ui-grid-a -->
 						<div class="action-block">
-							<button edit_id="${line.stocktakingLineId}" edit_qty="${line.countQty}" type="button" class="ui-btn ui-corner-all ui-btn-inline ui-mini btn-success edit-qty-btn" data-rel="popup">Edit</button>
-							<button del_id="${line.stocktakingLineId}" type="button" class="ui-btn ui-corner-all ui-btn-inline ui-mini btn-danger delete-btn" data-rel="popup">Delete</button>
+							<button edit_id="${line.stocktakingLineId}" edit_qty="${line.countQty}" type="button" class="ui-btn ui-corner-all ui-btn-inline ui-mini btn-success edit-qty-btn" data-rel="popup"><spring:message code="btn.edit" text="btn.edit"/></button>
+							<button del_id="${line.stocktakingLineId}" type="button" class="ui-btn ui-corner-all ui-btn-inline ui-mini btn-danger delete-btn" data-rel="popup"><spring:message code="btn.delete" text="btn.delete"/></button>
 						</div>
 					</li>
 				</c:forEach>

@@ -56,9 +56,10 @@ public class WarehouseLocatorDaoImp extends AbstractDao implements
 		ResultSet rset = null;
 		List<Warehouse> warehouseL = null;
 		StringBuffer userWHSql = new StringBuffer(
-				"SELECT distinct wh.M_Warehouse_ID ,wh.name warehouseName , wh.AD_Client_ID , wh.AD_Org_Id FROM M_Warehouse wh \n");
+				"SELECT distinct wh.M_Warehouse_ID ,wh.name warehouseName , wh.AD_Client_ID , wh.AD_Org_Id ,o.Name as orgName  FROM M_Warehouse wh \n");
 		userWHSql.append("INNER JOIN AD_Role_OrgAccess roa ON roa.AD_Org_ID = wh.AD_Org_ID \n")
 				 .append("INNER JOIN AD_USER_ROLES ur ON roa.AD_Role_ID = ur.AD_Role_ID \n")
+				 .append("INNER JOIN AD_Org o ON o.AD_Org_Id = wh.AD_Org_Id \n")
 				 .append("WHERE ur.AD_User_ID = ? \n")
 				 .append("AND roa.IsActive = 'Y' \n")
 				 .append("ORDER BY wh.M_Warehouse_ID ");
@@ -79,6 +80,7 @@ public class WarehouseLocatorDaoImp extends AbstractDao implements
 				warehouse.setAdOrgId(rset.getInt("AD_Org_Id"));
 				warehouse.setWarehouseId(rset.getInt("M_Warehouse_Id"));
 				warehouse.setWarehouseName(rset.getString("warehouseName"));
+				warehouse.setOrgName(rset.getString("orgName"));
 				
 				warehouseL.add(warehouse);
 			}

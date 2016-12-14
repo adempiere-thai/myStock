@@ -47,7 +47,7 @@ import th.co.cenos.web.WebSession;
 /**
  * @function myStock
  * @package th.co.cenos.controller
- * @classname LoginController
+ * @classname StocktakingController
  * @author Pasuwat Wang (CENS ONLINE SERVICES)
  * @created Nov 16, 2016 10:42:48 AM
  */
@@ -94,7 +94,7 @@ public class StocktakingController {
 		}catch(Exception ex){
 			// Cannot Parse Locator
 			model = new ModelAndView("redirect:/stocktaking");
-			model.addObject("error", "err.stocktaking.parsing");
+			model.addObject("error", "err.parsing");
 			return model;
 		}
 		
@@ -155,7 +155,7 @@ public class StocktakingController {
 		}catch(Exception ex){
 			// Cannot Parse Locator
 			model = new ModelAndView("redirect:/stocktaking");
-			model.addObject("error", "err.stocktaking.parsing");
+			model.addObject("error", "err.parsing");
 			return model;
 		}
 		
@@ -219,7 +219,7 @@ public class StocktakingController {
 				model.setViewName("stocktaking-new");
 				model.addObject("stkLine", line);
 				model.addObject("locator", locator);
-				model.addObject("error", "err.stocktaking.parsing");
+				model.addObject("error", "err.parsing");
 				model.addObject("errParams", "ASI Id" );
 				return model;
 			}
@@ -234,7 +234,7 @@ public class StocktakingController {
 				model.setViewName("stocktaking-new");
 				model.addObject("stkLine", line);
 				model.addObject("locator", locator);
-				model.addObject("error", "err.stocktaking.parsing");
+				model.addObject("error", "err.parsing");
 				model.addObject("errParams", "Count Qty" );
 				return model;
 			}
@@ -367,7 +367,7 @@ public class StocktakingController {
 				i_locatorId = Integer.valueOf(locatorId);
 			}
 			catch(Exception ex){
-				model.addObject("error", "err.stocktaking.parsing");
+				model.addObject("error", "err.parsing");
 				model.addObject("errParams", " Count Qty" );
 				isError = true;
 			}

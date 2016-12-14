@@ -17,7 +17,7 @@
 		<servlet.version>2.4</servlet.version>
 		<postgrsql.driver.version>8.4-702.jdbc4</postgrsql.driver.version>
 		<jackson.version>2.7.5</jackson.version>
-		
+		<adempiere.version>3.7</adempiere.version>
 	</properties>
 
 	<dependencies>
@@ -74,6 +74,13 @@
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
 			<version>${jackson.version}</version>
+		</dependency>
+		
+		<!-- Adempiere -->
+		<dependency>
+			<groupId>org.compiere</groupId>
+			<artifactId>Adempiere</artifactId>
+			<version>${adempiere.version}</version>
 		</dependency>
 
 	</dependencies>

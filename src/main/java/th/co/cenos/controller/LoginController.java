@@ -59,6 +59,9 @@ public class LoginController {
 	 
 	 @Value("${session.timeout}")
      private String sessionTimeout;
+	 
+	 @Value("${login.role}")
+     private String loginRole;
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String showLogin() {
@@ -119,6 +122,10 @@ public class LoginController {
 		}
 		
 		// Set User Session
+		
+		// set Role
+		user.setRole(loginRole);
+		
 		request.getSession().setMaxInactiveInterval(getSessionTimeout()); 
 		request.getSession().setAttribute(WebSession._LOGIN_USER, user);
 		

@@ -248,3 +248,11 @@ hr {
 	line-height: 25px;
 	text-align: center;
 }
+
+#completedMsg{
+	text-align : center ;
+}
+
+#docNo{
+	color : red;
+}

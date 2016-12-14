@@ -94,7 +94,7 @@ public class SecurityServiceImp implements SecurityService {
 		
 		Menu menu3 = new Menu();
 		menu3.setMenuName("menu.internalUse");
-		menu3.setUrl("internalUse");
+		menu3.setUrl("internaluse");
 		
 		menuL.add(menu1);
 		menuL.add(menu2);

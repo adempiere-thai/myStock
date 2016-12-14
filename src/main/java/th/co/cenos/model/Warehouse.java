@@ -34,6 +34,7 @@ public class Warehouse implements Serializable {
 	private static final long serialVersionUID = -1936356748911194167L;
 	
 	private int adOrgId;
+	private String orgName;
 	private int warehouseId ;
 	private String warehouseName;
 	
@@ -85,6 +86,18 @@ public class Warehouse implements Serializable {
 	 */
 	public void setLocatorL(List<Locator> locatorL) {
 		this.locatorL = locatorL;
+	}
+	/**
+	 * @return the orgName
+	 */
+	public String getOrgName() {
+		return orgName;
+	}
+	/**
+	 * @param orgName the orgName to set
+	 */
+	public void setOrgName(String orgName) {
+		this.orgName = orgName;
 	}
 	 
 }

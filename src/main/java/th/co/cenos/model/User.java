@@ -37,6 +37,7 @@ public class User implements Serializable {
 	private int userId ;
 	private String username ;
 	private String pwd;
+	private String role;
 	
 	private List<Warehouse> warehouseL;
 	
@@ -99,6 +100,18 @@ public class User implements Serializable {
 	 */
 	public void setWarehouseL(List<Warehouse> warehouseL) {
 		this.warehouseL = warehouseL;
+	}
+	/**
+	 * @return the role
+	 */
+	public String getRole() {
+		return role;
+	}
+	/**
+	 * @param role the role to set
+	 */
+	public void setRole(String role) {
+		this.role = role;
 	}
 
 }

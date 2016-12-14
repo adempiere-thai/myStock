@@ -18,6 +18,7 @@ package th.co.cenos.web;
 
 import javax.servlet.http.HttpServletRequest;
 
+import th.co.cenos.model.InternalUse;
 import th.co.cenos.model.User;
 import th.co.cenos.model.Warehouse;
 import th.co.cenos.model.Stocktaking;
@@ -34,6 +35,7 @@ public class WebSession {
 	public static final String _DEFAULT_WAREHOUSE = "DEFAULT_WAREHOUSE";
 	public static final String _STOCKTAKING_DOCUMENT ="STOCKTAKING";
 	public static final String _IS_OPEN_STOCKTAKING ="IS_OPEN_STOCKTAKING";
+	public static final String _INTERNALUSE_DOCUMENT = "INTERNAL_USE";
 	
 	public static User getLoginUser(HttpServletRequest request){
 		User user = null;
@@ -62,4 +64,12 @@ public class WebSession {
 		return warehouse;
 	}
 	
+	public static InternalUse getInternalUse(HttpServletRequest request){
+		InternalUse internalUse = null;
+		
+		if(request.getSession().getAttribute(_INTERNALUSE_DOCUMENT)!=null)
+			internalUse = (InternalUse)request.getSession().getAttribute(_INTERNALUSE_DOCUMENT) ;
+		
+		return internalUse;
+	}
 }

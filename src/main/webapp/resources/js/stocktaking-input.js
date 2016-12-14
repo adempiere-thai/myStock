@@ -18,6 +18,10 @@ $( document ).on( "pageinit", "#stocktaking-input", function() {
 				$("#productId").value(data.productId);
 				$("#asiId").focus();
 			}
+			else{
+				$("#productName").html("");
+				$("#productId").value("");
+			}
 		});
 	});
 	
@@ -34,6 +38,9 @@ $( document ).on( "pageinit", "#stocktaking-input", function() {
 				
 				$("#asiDesc").html(data.description);
 				$("#countQty").focus();
+			}
+			else{
+				$("#asiDesc").html("");
 			}
 		});
 	});
