@@ -61,7 +61,7 @@ public class WarehouseLocatorDaoImp extends AbstractDao implements
 				 .append("INNER JOIN AD_USER_ROLES ur ON roa.AD_Role_ID = ur.AD_Role_ID \n")
 				 .append("INNER JOIN AD_Org o ON o.AD_Org_Id = wh.AD_Org_Id \n")
 				 .append("WHERE ur.AD_User_ID = ? \n")
-				 .append("AND roa.IsActive = 'Y' \n")
+				 .append("AND roa.IsActive = 'Y' wh.IsActive = 'Y' \n")
 				 .append("ORDER BY wh.M_Warehouse_ID ");
 
 		try {
@@ -104,7 +104,7 @@ public class WarehouseLocatorDaoImp extends AbstractDao implements
 		List<Locator> locatorL = null;
 		StringBuffer whSql = new StringBuffer("SELECT  wh.AD_Org_Id ,wh.M_Warehouse_Id , wh.Name as WarehouseName , lo.M_Locator_Id , lo.Value , lo.isDefault \n");
 		whSql.append("FROM M_Warehouse wh LEFT JOIN M_Locator lo ON wh.M_Warehouse_ID = lo.M_Warehouse_Id \n")
-			.append("WHERE wh.M_Warehouse_Id =? ORDER BY lo.PriorityNo Desc ");
+			.append("WHERE wh.M_Warehouse_Id =? AND lo.IsActive = 'Y' ORDER BY lo.PriorityNo Desc ");
 		try {
 			conn = getConnection();
 			ppstmt = conn.prepareStatement(whSql.toString());
