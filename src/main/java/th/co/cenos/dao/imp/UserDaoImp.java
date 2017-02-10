@@ -43,7 +43,7 @@ public class UserDaoImp extends AbstractDao implements UserDao {
 		PreparedStatement ppstmt = null;
 		ResultSet rset = null;
 		User user = null;
-		StringBuffer loginSQL = new StringBuffer("SELECT * FROM AD_USER WHERE AD_Client_ID = ? AND name = ? AND Password = ? "); 
+		StringBuffer loginSQL = new StringBuffer("SELECT * FROM AD_USER WHERE AD_Client_ID = ? AND name = ? AND Password = ? AND IsActive = 'Y' "); 
 		
 		try{
 			conn = getConnection();
