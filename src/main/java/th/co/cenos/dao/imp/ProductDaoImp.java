@@ -55,11 +55,12 @@ public class ProductDaoImp extends AbstractDao implements ProductDao {
 		StringBuffer fndProductSql = new StringBuffer(
 				"SELECT stock.* FROM(  \n");
 		fndProductSql
-				.append("\t\tSELECT stk.m_product_id , stk.value product_value ,  stk.product_name , stk.IsStocked ,SUM(stk.qtyavailable) as qtyavailable, SUM(stk.qtyonhand) as qtyonhand, SUM(stk.qtyreserved) as qtyreserved, SUM(stk.qtyordered) as qtyordered \n")
+				.append("\t\tSELECT stk.m_product_id , stk.value product_value ,  stk.product_name , stk.IsStocked , stk.locator_code ,SUM(stk.qtyavailable) as qtyavailable, SUM(stk.qtyonhand) as qtyonhand, SUM(stk.qtyreserved) as qtyreserved, SUM(stk.qtyordered) as qtyordered \n")
 				.append("\t\tFROM ext_product_stock_v stk \n")
 				.append("\t\tWHERE stk.AD_Client_Id = ? AND stk.M_Warehouse_id = ? \n")
-				.append("\t\tAND (stk.product_name like ? or stk.value like ? ) \n")
-				.append("\t\tGROUP BY stk.m_product_id , stk.value ,  stk.product_name, stk.IsStocked ) stock \n")
+				.append("\t\tAND (lower(stk.product_name) like lower(?) or lower(stk.value) like lower(?) ) \n")
+				.append("\t\tGROUP BY stk.m_product_id , stk.value ,  stk.product_name, stk.IsStocked,stk.locator_code ) stock \n")
+				.append("WHERE stock.qtyavailable <> 0 AND stock.qtyonhand <> 0 AND stock.qtyreserved <> 0 AND stock.qtyordered <> 0 \n")
 				.append("ORDER BY stock.product_value , stock.IsStocked DESC , stock.qtyavailable DESC ");
 
 		try {
@@ -81,6 +82,7 @@ public class ProductDaoImp extends AbstractDao implements ProductDao {
 				product.setProductId(rset.getInt("m_product_id"));
 				product.setProductName(rset.getString("product_name"));
 				product.setProductSrhKey(rset.getString("product_value"));
+				product.setLocatorCode(rset.getString("locator_code"));
 				product.setAvailableQty(rset.getBigDecimal("qtyavailable"));
 				product.setOnhandQty(rset.getBigDecimal("qtyonhand"));
 				product.setOrderQty(rset.getBigDecimal("qtyordered"));

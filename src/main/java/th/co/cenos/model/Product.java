@@ -36,6 +36,7 @@ public class Product implements Serializable {
 	private int productId ;
 	private String productSrhKey;
 	private String productName;
+	private String locatorCode;
 	
 	private BigDecimal availableQty;
 	private BigDecimal orderQty;
@@ -61,6 +62,12 @@ public class Product implements Serializable {
 	}
 	public void setProductName(String productName) {
 		this.productName = productName;
+	}
+	public String getLocatorCode() {
+		return locatorCode;
+	}
+	public void setLocatorCode(String locatorCode) {
+		this.locatorCode = locatorCode;
 	}
 	public BigDecimal getAvailableQty() {
 		return availableQty;
