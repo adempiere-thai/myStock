@@ -61,7 +61,7 @@ public class WarehouseLocatorDaoImp extends AbstractDao implements
 				 .append("INNER JOIN AD_USER_ROLES ur ON roa.AD_Role_ID = ur.AD_Role_ID \n")
 				 .append("INNER JOIN AD_Org o ON o.AD_Org_Id = wh.AD_Org_Id \n")
 				 .append("WHERE ur.AD_User_ID = ? \n")
-				 .append("AND roa.IsActive = 'Y' wh.IsActive = 'Y' \n")
+				 .append("AND roa.IsActive = 'Y' AND wh.IsActive = 'Y' \n")
 				 .append("ORDER BY wh.M_Warehouse_ID ");
 
 		try {
