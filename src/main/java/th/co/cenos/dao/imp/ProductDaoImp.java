@@ -60,7 +60,7 @@ public class ProductDaoImp extends AbstractDao implements ProductDao {
 				.append("\t\tWHERE stk.AD_Client_Id = ? AND stk.M_Warehouse_id = ? \n")
 				.append("\t\tAND (lower(stk.product_name) like lower(?) or lower(stk.value) like lower(?) ) \n")
 				.append("\t\tGROUP BY stk.m_product_id , stk.value ,  stk.product_name, stk.IsStocked,stk.locator_code ) stock \n")
-				.append("WHERE stock.qtyavailable <> 0 AND stock.qtyonhand <> 0 AND stock.qtyreserved <> 0 AND stock.qtyordered <> 0 \n")
+				.append("WHERE ( stock.qtyavailable <> 0 OR stock.qtyonhand <> 0 OR stock.qtyreserved <> 0 OR stock.qtyordered <> 0 ) \n")
 				.append("ORDER BY stock.product_value , stock.IsStocked DESC , stock.qtyavailable DESC ");
 
 		try {
