@@ -14,25 +14,51 @@
  * ComPiere, Inc., 2620 Augustine Dr. #245, Santa Clara, CA 95054, USA        *
  * or via info@compiere.org or http://www.compiere.org/license.html           *
  *****************************************************************************/
-package th.co.cenos.dao;
+package th.co.cenos.service.imp;
 
 import java.math.BigDecimal;
 
-import th.co.cenos.model.Stocktaking;
-import th.co.cenos.model.StocktakingLine;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import th.co.cenos.dao.PIDocDao;
+import th.co.cenos.model.PIDoc;
+import th.co.cenos.model.PIDocLine;
 import th.co.cenos.model.User;
 import th.co.cenos.model.Warehouse;
+import th.co.cenos.services.PIDocService;
 
 /**
  * @function myStock
- * @package th.co.cenos.dao
- * @classname StocktakingDao
+ * @package th.co.cenos.service.imp
+ * @classname PIDocServiceImp
  * @author Pasuwat Wang (CENS ONLINE SERVICES)
- * @created Nov 24, 2016 3:11:27 PM
+ * @created Nov 24, 2016 3:10:43 PM
  */
-public interface StocktakingDao {
-	public Stocktaking getOpenStocktaking(Warehouse warehouse);
-	public int saveStocktakingLine(StocktakingLine line , User user);
-	public int deleteStocktakingLine(int lineId);
-	public int updateQty(int i_lineId, BigDecimal bd_countQty, User user);
+@Service
+@Transactional
+public class PIDocServiceImp implements PIDocService {
+
+	@Autowired
+	PIDocDao piDocDao;
+
+	@Override
+	public PIDoc findPIDocByDocNo(int adClientId, int adOrgId, String documentNo) {
+		// TODO Auto-generated method stub
+		return piDocDao.findPIDocByDocNo(adClientId, adOrgId, documentNo);
+	}
+
+	@Override
+	public PIDocLine findPIDocLine(PIDocLine line) {
+		// TODO Auto-generated method stub
+		return piDocDao.findPIDocLine(line);
+	}
+
+	@Override
+	public int updatePIDocLine(PIDocLine line) {
+		// TODO Auto-generated method stub
+		return piDocDao.updatePIDocLine(line);
+	}
+
 }

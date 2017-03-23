@@ -26,32 +26,52 @@ import java.math.BigDecimal;
  * @author Pasuwat Wang (CENS ONLINE SERVICES)
  * @created Nov 24, 2016 12:11:23 PM
  */
-public class StocktakingLine implements Serializable {
+public class PIDocLine implements Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -1901137900274204281L;
 	
-	public StocktakingLine(){
-		this.asi = new AttributeSetInstance();
-		this.product = new Product();
-	}
-	
+	private int adClientId;
 	private int adOrgId ;
-	private int stocktakingLineId;
-	private int stocktakingId;
+	private int piDocLineId;
+	private int piDocId;
+	
+	// Input Form
+	private int locatorId;
+	private String pdCode;
+	private int asiId;
+	
 	private int lineNo;
 	private Product product;
 	private AttributeSetInstance asi;
 	private Locator locator;
 	private BigDecimal countQty;
 	
-	public int getStocktakingLineId() {
-		return stocktakingLineId;
+	/**
+	 * @return the piDocLineId
+	 */
+	public int getPiDocLineId() {
+		return piDocLineId;
 	}
-	public void setStocktakingLineId(int stocktakingLineId) {
-		this.stocktakingLineId = stocktakingLineId;
+	/**
+	 * @param piDocLineId the piDocLineId to set
+	 */
+	public void setPiDocLineId(int piDocLineId) {
+		this.piDocLineId = piDocLineId;
+	}
+	/**
+	 * @return the piDocId
+	 */
+	public int getPiDocId() {
+		return piDocId;
+	}
+	/**
+	 * @param piDocId the piDocId to set
+	 */
+	public void setPiDocId(int piDocId) {
+		this.piDocId = piDocId;
 	}
 	public int getLineNo() {
 		return lineNo;
@@ -83,16 +103,40 @@ public class StocktakingLine implements Serializable {
 	public void setCountQty(BigDecimal countQty) {
 		this.countQty = countQty;
 	}
-	public int getStocktakingId() {
-		return stocktakingId;
-	}
-	public void setStocktakingId(int stocktakingId) {
-		this.stocktakingId = stocktakingId;
-	}
 	public int getAdOrgId() {
 		return adOrgId;
 	}
 	public void setAdOrgId(int adOrgId) {
 		this.adOrgId = adOrgId;
+	}
+	public int getLocatorId() {
+		return locatorId;
+	}
+	public void setLocatorId(int locatorId) {
+		this.locatorId = locatorId;
+	}
+	public String getPdCode() {
+		return pdCode;
+	}
+	public void setPdCode(String pdCode) {
+		this.pdCode = pdCode;
+	}
+	public int getAsiId() {
+		return asiId;
+	}
+	public void setAsiId(int asiId) {
+		this.asiId = asiId;
+	}
+	/**
+	 * @return the adClientId
+	 */
+	public int getAdClientId() {
+		return adClientId;
+	}
+	/**
+	 * @param adClientId the adClientId to set
+	 */
+	public void setAdClientId(int adClientId) {
+		this.adClientId = adClientId;
 	}
 }

@@ -14,13 +14,15 @@ $( document ).on( "pageinit", "#stocktaking-input", function() {
 				console.log("Product Key "+data.productSrhKey);
 				console.log("Product name "+data.productName);
 				
-				$("#productName").html(data.productName);
-				$("#productId").value(data.productId);
+				$("#productNameTxt").html(data.productName);
+				$("#productId").val(data.productId);
+				$("#productName").val(data.productName);
 				$("#asiId").focus();
 			}
 			else{
-				$("#productName").html("");
-				$("#productId").value("");
+				$("#productNameTxt").html("");
+				$("#productName").val("");
+				$("#productId").val("");
 			}
 		});
 	});
@@ -36,12 +38,26 @@ $( document ).on( "pageinit", "#stocktaking-input", function() {
 			if(data != null ){
 				console.log("ASI Description "+data.description);
 				
-				$("#asiDesc").html(data.description);
+				$("#asiDescTxt").html(data.description);
+				$("#asiDesc").val(data.description);
 				$("#countQty").focus();
 			}
 			else{
-				$("#asiDesc").html("");
+				$("#asiDescTxt").html("");
+				$("#asiDesc").val("");
 			}
 		});
+	});
+	
+	$("#saveBtn").on("click", function(e) {
+		$("#action").val("save");
+		/*alert($("#asiId").val());
+		alert($("#productId").val());*/
+		$("#piDocLineFrm").submit();
+	});
+	
+	$("#saveNextBtn").on("click", function(e) {
+		$("#action").val("save.next");
+		$("#piDocLineFrm").submit();
 	});
 });

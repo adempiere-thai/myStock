@@ -14,60 +14,25 @@
  * ComPiere, Inc., 2620 Augustine Dr. #245, Santa Clara, CA 95054, USA        *
  * or via info@compiere.org or http://www.compiere.org/license.html           *
  *****************************************************************************/
-package th.co.cenos.model;
+package th.co.cenos.dao;
 
-import java.io.Serializable;
+import java.math.BigDecimal;
 
+import th.co.cenos.model.PIDoc;
+import th.co.cenos.model.PIDocLine;
 /**
  * @function myStock
- * @package th.co.cenos.model
- * @classname AttributeSetInstance
+ * @package th.co.cenos.dao
+ * @classname StocktakingDao
  * @author Pasuwat Wang (CENS ONLINE SERVICES)
- * @created Nov 16, 2016 9:52:09 AM
+ * @created Nov 24, 2016 3:11:27 PM
  */
-public class AttributeSetInstance implements Serializable {
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 4835292487296607099L;
-
-	private Integer attributeSetInstanceId;
-	private String description;
-	private String lotNo;
-	private String attributeSet;
+public interface PIDocDao {
 	
-	private String asiId;
+	public PIDoc findPIDocByDocNo(int adClientId , int adOrgId ,String documentNo );
 	
-	public Integer getAttributeSetInstanceId() {
-		return attributeSetInstanceId;
-	}
-	public void setAttributeSetInstanceId(Integer attributeSetInstanceId) {
-		this.attributeSetInstanceId = attributeSetInstanceId;
-	}
-	public String getDescription() {
-		return description;
-	}
-	public void setDescription(String description) {
-		this.description = description;
-	}
-	public String getLotNo() {
-		return lotNo;
-	}
-	public void setLotNo(String lotNo) {
-		this.lotNo = lotNo;
-	}
-	public String getAttributeSet() {
-		return attributeSet;
-	}
-	public void setAttributeSet(String attributeSet) {
-		this.attributeSet = attributeSet;
-	}
-	public String getAsiId() {
-		return asiId;
-	}
-	public void setAsiId(String asiId) {
-		this.asiId = asiId;
-	}
-
+	public PIDocLine findPIDocLine(PIDocLine line);
+	
+	public int updatePIDocLine(PIDocLine line);
+	
 }

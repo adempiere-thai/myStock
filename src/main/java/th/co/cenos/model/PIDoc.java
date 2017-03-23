@@ -22,34 +22,68 @@ import java.util.List;
 /**
  * @function myStock
  * @package th.co.cenos.model
- * @classname Stocktaking
+ * @classname PIDoc
  * @author Pasuwat Wang (CENS ONLINE SERVICES)
  * @created Nov 24, 2016 12:09:55 PM
  */
-public class Stocktaking implements Serializable {
+public class PIDoc implements Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 7205460459420718443L;
 	
-	private int stocktakingId ;
-	
-	private List<StocktakingLine> lineL;
+	private int piDocId ;
+	private String piDocNo;
+	private String docStatus;
+	private int totalLines;
 
-	public int getStocktakingId() {
-		return stocktakingId;
+	/**
+	 * @return the piDocId
+	 */
+	public int getPiDocId() {
+		return piDocId;
 	}
-
-	public void setStocktakingId(int stocktakingId) {
-		this.stocktakingId = stocktakingId;
+	/**
+	 * @param piDocId the piDocId to set
+	 */
+	public void setPiDocId(int piDocId) {
+		this.piDocId = piDocId;
 	}
-
-	public List<StocktakingLine> getLineL() {
-		return lineL;
+	/**
+	 * @return the piDocNo
+	 */
+	public String getPiDocNo() {
+		return piDocNo;
 	}
-
-	public void setLineL(List<StocktakingLine> lineL) {
-		this.lineL = lineL;
+	/**
+	 * @param piDocNo the piDocNo to set
+	 */
+	public void setPiDocNo(String piDocNo) {
+		this.piDocNo = piDocNo;
+	}
+	/**
+	 * @return the docStatus
+	 */
+	public String getDocStatus() {
+		return docStatus;
+	}
+	/**
+	 * @param docStatus the docStatus to set
+	 */
+	public void setDocStatus(String docStatus) {
+		this.docStatus = docStatus;
+	}
+	/**
+	 * @return the totalLines
+	 */
+	public int getTotalLines() {
+		return totalLines;
+	}
+	/**
+	 * @param totalLines the totalLines to set
+	 */
+	public void setTotalLines(int totalLines) {
+		this.totalLines = totalLines;
 	}
 }

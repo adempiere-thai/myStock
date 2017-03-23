@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import th.co.cenos.model.InternalUse;
 import th.co.cenos.model.User;
 import th.co.cenos.model.Warehouse;
-import th.co.cenos.model.Stocktaking;
+import th.co.cenos.model.PIDoc;
 
 /**
  * @function myStock
@@ -33,7 +33,6 @@ import th.co.cenos.model.Stocktaking;
 public class WebSession {
 	public static final String _LOGIN_USER = "LOGIN_USER";
 	public static final String _DEFAULT_WAREHOUSE = "DEFAULT_WAREHOUSE";
-	public static final String _STOCKTAKING_DOCUMENT ="STOCKTAKING";
 	public static final String _IS_OPEN_STOCKTAKING ="IS_OPEN_STOCKTAKING";
 	public static final String _INTERNALUSE_DOCUMENT = "INTERNAL_USE";
 	
@@ -44,15 +43,6 @@ public class WebSession {
 			user = (User)request.getSession().getAttribute(_LOGIN_USER) ;
 		
 		return user;
-	}
-	
-	public static Stocktaking getOpenedStocktaking(HttpServletRequest request){
-		Stocktaking stocktaking = null;
-		
-		if(request.getSession().getAttribute(_STOCKTAKING_DOCUMENT)!=null)
-			stocktaking = (Stocktaking)request.getSession().getAttribute(_STOCKTAKING_DOCUMENT) ;
-		
-		return stocktaking;
 	}
 	
 	public static Warehouse getDefaultWarehouse(HttpServletRequest request){
