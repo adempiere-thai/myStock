@@ -17,10 +17,19 @@
 
 	<servlet>
 		<servlet-name>myStock</servlet-name>
-		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<servlet-class>th.co.cenos.web.AdempiereServlet</servlet-class>
 		<init-param>
 			<param-name>contextConfigLocation</param-name>
 			<param-value>/WEB-INF/myStock-servlet.xml</param-value>
+		</init-param>
+		<!--  Please Change Adempiere Properties File Here 
+			1. Adempiere.dev.properties for Development Machine
+			2. Adempiere.14.dbtest.properties for .14 DB Test
+			3. Adempiere.14.wipdb.properties for .14 DB wipDB
+		-->
+		<init-param>
+			<param-name>adempierePropFile</param-name>
+			<param-value>Adempiere.14.dbtest.properties</param-value> 
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
