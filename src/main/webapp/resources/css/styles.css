@@ -256,3 +256,9 @@ hr {
 #docNo{
 	color : red;
 }
+
+#processingImg{
+	max-width: 80%; 
+	width: auto; 
+	height: auto;
+}

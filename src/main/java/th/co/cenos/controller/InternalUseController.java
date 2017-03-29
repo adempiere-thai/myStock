@@ -43,10 +43,7 @@ import th.co.cenos.web.WebSession;
 @Controller
 public class InternalUseController {
 
-	private Logger logger = LoggerFactory.getLogger(InternalUseController.class);
-	
-	@Value("${ad.reference.id}")
-    private String adReferenceId;
+	private Logger logger = LoggerFactory.getLogger(InternalUseController.class);	
 	 
 	@Autowired
 	InternalUseService internalUseService;
@@ -56,11 +53,8 @@ public class InternalUseController {
 	 
 	@RequestMapping(value = "/internaluse", method = RequestMethod.GET)
 	public ModelAndView showInternalUsePage(HttpServletRequest request) {
-		List<ItemList> reasonL = internalUseService.getReasonList(adReferenceId);
-		 
 		ModelAndView model = new ModelAndView();
 		model.setViewName("internaluse");
-		model.addObject("reasonL", reasonL);
 		
 		return model;
 	}
@@ -94,6 +88,11 @@ public class InternalUseController {
 		ModelAndView model = new ModelAndView();
 		
 		InternalUse internalUse = WebSession.getInternalUse(request);
+		if(internalUse == null){
+			model.setViewName("redirect:/internaluse");
+			return model;
+		}
+		
 		model.addObject("detailL", internalUse.getLineL());
 		model.setViewName("internaluse-detail");
 		return model;
@@ -370,10 +369,13 @@ public class InternalUseController {
 		User user = WebSession.getLoginUser(request);
 		Warehouse warehouse = WebSession.getDefaultWarehouse(request);
 		InternalUse internalUse = WebSession.getInternalUse(request);
+		String action = request.getParameter("action");
 		String jsonString = "";
 		
+		List<InternalUseLine> lineL = internalUse.getLineL();
+		
 		try{
-			String documentNo = internalUseService.saveInternalUse(internalUse, user ,warehouse );
+			String documentNo = internalUseService.saveInternalUse(internalUse, user ,warehouse ,action);
 			jsonString = toJsonString(documentNo);
 		}
 		catch(Exception ex){

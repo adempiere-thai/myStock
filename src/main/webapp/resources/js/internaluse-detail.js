@@ -24,12 +24,41 @@ $( document ).on( "pageinit", "#internaluse-detail", function() {
 		$("#deleteFrm").submit();
 	});
 	
-	$("#saveDocument").on("click", function(e) {
+	$("#selectDocActionBtn").on("click", function(e) {
+		//$('#selectDocActionDialog').popup('open');
+		$.mobile.changePage( "#selectDocActionDialog", { role: "dialog" } );
+	});
+	
+	$("#saveDraft").on("click", function(e) {
+		$.mobile.changePage( "#processing", { role: "dialog" } );
 		$('#processingImg').show();
 		$('#completedMsg').hide();		
-		$('#processing').popup('open');
+		//$('#processing').popup('open');
 		
-		var url = '/myStock/internaluse/save';
+		var url = '/myStock/internaluse/save?action=DR';
+		
+		$.getJSON(url, function (data) {
+			console.log(data);
+			
+			if(data.indexOf("err") > -1){
+				// Error 
+				window.location.href = "/myStock/internaluse/detail?error="+data;
+			}
+			else{
+				$('#docNo').text(data);
+				$('#processingImg').hide();
+				$('#completedMsg').show();
+			}
+		});
+		
+	});
+	
+	$("#saveComplete").on("click", function(e) {
+		$.mobile.changePage( "#processing", { role: "dialog" } );
+		$('#processingImg').show();
+		$('#completedMsg').hide();		
+		
+		var url = '/myStock/internaluse/save?action=CO';
 		
 		$.getJSON(url, function (data) {
 			console.log(data);

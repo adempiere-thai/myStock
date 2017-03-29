@@ -15,9 +15,6 @@ import org.compiere.process.DocAction;
 import org.compiere.util.CLogMgt;
 import org.compiere.util.Env;
 import org.compiere.util.Ini;
-import org.compiere.util.KeyNamePair;
-import org.compiere.util.Login;
-import org.compiere.util.Trx;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -45,16 +42,13 @@ public class AdempiereProcess {
 	@Value("${adempiere.home}")
     private String adempiereHome;
 	
-	@Value("${ad.reference.id}")
-    private int adReferenceId; // Reference Id for Reason List
-	
 	Properties m_ctx = null;
 	
 	public AdempiereProcess(){
 		m_ctx = new Properties();
 	}
 	
-	public String saveInternalUse(InternalUse internalUse, User user , Warehouse warehouse) throws Exception {
+	public String saveInternalUse(InternalUse internalUse, User user , Warehouse warehouse , String action) throws Exception {
 		// TODO Auto-generated method stub
 		
 		loginADempiere(user, warehouse);
@@ -66,11 +60,9 @@ public class AdempiereProcess {
 			mmiDoctype = type;
 		}
 		
-		MRefList reason = MRefList.get(Env.getCtx(), adReferenceId, internalUse.getReason(), null);
-		
 		MInventory inventory = new MInventory(Env.getCtx(),0,null);
 		inventory.setAD_Org_ID(warehouse.getAdOrgId());
-		inventory.setDescription(reason.getName());
+		inventory.setDescription(internalUse.getReason());
 		inventory.setC_DocType_ID(mmiDoctype.getC_DocType_ID());
 		inventory.setM_Warehouse_ID(warehouse.getWarehouseId());
 		
@@ -102,20 +94,22 @@ public class AdempiereProcess {
 			
 		}
 		
-		inventory.processIt(DocAction.ACTION_Complete);
+		if(DocAction.ACTION_Complete.equals(action))
+			inventory.processIt(DocAction.ACTION_Complete);
+		
 		inventory.saveEx(inventory.get_TrxName());
 		
 		Env.logout();
-		
+
 		return inventory.getDocumentNo(); 
 		
 	}
 
 	private void loginADempiere(User user ,Warehouse wh ){
-		Ini.setAdempiereHome(adempiereHome);
 		CLogMgt.setLoggerLevel(Level.INFO, null);
 		
-		Adempiere.startup(false);
+		
+		//Adempiere.startup(false);
 		MClient client = MClient.get(m_ctx, user.getAdClientId());
 		MSystem system = MSystem.get(m_ctx);
 		

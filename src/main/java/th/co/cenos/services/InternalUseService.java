@@ -37,9 +37,8 @@ public interface InternalUseService {
 	 * @param adRefListId
 	 * @return
 	 */
-	public List<ItemList> getReasonList(String adReferenceId);
 
-	public String saveInternalUse(InternalUse internalUse , User user , Warehouse warehouse) throws Exception;
+	public String saveInternalUse(InternalUse internalUse , User user , Warehouse warehouse, String action) throws Exception;
 	
 
 }

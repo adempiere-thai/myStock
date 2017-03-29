@@ -16,15 +16,7 @@
 			<form id="reasonFrm" novalidate="novalidate" data-ajax="false" method="post" action="${pageContext.request.contextPath}/internaluse">
 			<div class="ui-field-contain">
 				<label for="reason" class="caption"><spring:message code="label.reason"  text="label.reason" /></label> 
-				<select name="reason" id="reason">
-					<c:forEach items="${reasonL}" var="reason">
-						<c:set var="reasonSelected" value=""/>
-						<c:if test="${sessionScope.INTERNAL_USE != null && sessionScope.INTERNAL_USE.reason eq reason.itemCode }" >
-							<c:set var="reasonSelected" value="selected"/>
-						</c:if>
-						<option value="${reason.itemCode}" ${reasonSelected}>${reason.itemName}</option>					
-					</c:forEach>
-				</select>
+				<textarea id="reason" name="reason"><c:if test="${sessionScope.INTERNAL_USE != null}" >${sessionScope.INTERNAL_USE.reason}</c:if></textarea>
 			</div>
 			</form>
 		</div>
