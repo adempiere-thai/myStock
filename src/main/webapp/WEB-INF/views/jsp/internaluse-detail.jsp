@@ -97,8 +97,9 @@
     		<h1>Document Processed</h1>
   		</div>
   		<div data-role="main" class="ui-content">
-		<img id="processingImg" src="${pageContext.request.contextPath}/resources/img/loader.gif" />
-			
+  		<div id="processing">
+			<img id="processingImg" src="${pageContext.request.contextPath}/resources/img/loader.gif" />
+		</div>
 		<div id="completedMsg">
 			<p><spring:message code="msg.internal.use" htmlEscape="false" argumentSeparator="," /></p>
 			<a href="${pageContext.request.contextPath}/home" class="ui-btn ui-corner-all ui-btn-inline ui-mini" ><spring:message code="btn.ok" text="btn.ok" /></a>

@@ -261,4 +261,10 @@ hr {
 	max-width: 80%; 
 	width: auto; 
 	height: auto;
+	text-align:center;
+}
+
+#processing{
+	width:100%;
+	text-align:center;
 }

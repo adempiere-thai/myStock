@@ -15,12 +15,12 @@ $( document ).on( "pageinit", "#internaluse-input", function() {
 				console.log("Product name "+data.productName);
 				
 				$("#productName").html(data.productName);
-				$("#productId").value(data.productId);
+				$("#productId").val(data.productId);
 				$("#asiId").focus();
 			}
 			else{
 				$("#productName").html("");
-				$("#productId").value("");
+				$("#productId").val("");
 			}
 		});
 	});
@@ -37,7 +37,7 @@ $( document ).on( "pageinit", "#internaluse-input", function() {
 				console.log("ASI Description "+data.description);
 				
 				$("#asiDesc").html(data.description);
-				$("#countQty").focus();
+				$("#usedQty").focus();
 			}
 			else{
 				$("#asiDesc").html("");
