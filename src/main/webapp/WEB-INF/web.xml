@@ -16,7 +16,7 @@
 	</listener>
 
 	<servlet>
-		<servlet-name>myStock</servlet-name>
+		<servlet-name>myStock2</servlet-name>
 		<servlet-class>th.co.cenos.web.AdempiereServlet</servlet-class>
 		<init-param>
 			<param-name>contextConfigLocation</param-name>
@@ -25,17 +25,18 @@
 		<!--  Please Change Adempiere Properties File Here 
 			1. Adempiere.dev.properties for Development Machine
 			2. Adempiere.14.dbtest.properties for .14 DB Test
-			3. Adempiere.14.wipdb.properties for .14 DB wipDB
+			3. Adempiere.wipdb.properties for .14 DB wipDB
+			4. Adempiere.wipdb2.properties for .14 DB wipDB2
 		-->
 		<init-param>
 			<param-name>adempierePropFile</param-name>
-			<param-value>Adempiere.14.dbtest.properties</param-value> 
+			<param-value>Adempiere.wipdb2.properties</param-value> 
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 
 	<servlet-mapping>
-		<servlet-name>myStock</servlet-name>
+		<servlet-name>myStock2</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
 </web-app>
