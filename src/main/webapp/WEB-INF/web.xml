@@ -15,6 +15,19 @@
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
 
+	<filter>
+		<filter-name>charsetFilter</filter-name>
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>charsetFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
 	<servlet>
 		<servlet-name>myStock2</servlet-name>
 		<servlet-class>th.co.cenos.web.AdempiereServlet</servlet-class>
@@ -22,15 +35,13 @@
 			<param-name>contextConfigLocation</param-name>
 			<param-value>/WEB-INF/myStock-servlet.xml</param-value>
 		</init-param>
-		<!--  Please Change Adempiere Properties File Here 
-			1. Adempiere.dev.properties for Development Machine
-			2. Adempiere.14.dbtest.properties for .14 DB Test
-			3. Adempiere.wipdb.properties for .14 DB wipDB
-			4. Adempiere.wipdb2.properties for .14 DB wipDB2
-		-->
+		<!-- Please Change Adempiere Properties File Here 1. Adempiere.dev.properties 
+			for Development Machine 2. Adempiere.14.dbtest.properties for .14 DB Test 
+			3. Adempiere.wipdb.properties for .14 DB wipDB 4. Adempiere.wipdb2.properties 
+			for .14 DB wipDB2 -->
 		<init-param>
 			<param-name>adempierePropFile</param-name>
-			<param-value>Adempiere.wipdb2.properties</param-value> 
+			<param-value>Adempiere.dev.properties</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
