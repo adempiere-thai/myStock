@@ -43,8 +43,8 @@
 			<form:input path="piDocId" type="hidden" />
 			
 			<input id="action" name="action" type="hidden" value="" />
-			<button type="button" id="saveBtn" class="ui-shadow ui-btn ui-corner-all ui-mini"><spring:message code="btn.save" text="btn.save" /></button>
 			<button type="button" id="saveNextBtn" class="ui-shadow ui-btn ui-corner-all ui-mini"><spring:message code="btn.save.and.next" text="btn.save.and.next" /></button>
+			<button type="button" id="saveBtn" class="ui-shadow ui-btn ui-corner-all ui-mini"><spring:message code="btn.save" text="btn.save" /></button>
 			</form:form>
 		</div>
 
