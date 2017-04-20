@@ -135,13 +135,18 @@ public class PIDocController {
 			Warehouse warehouse = WebSession.getDefaultWarehouse(request);
 			List<Locator> locatorL = warehouse.getLocatorL();
 			Map<Integer , String> locatorOpt = new HashMap<Integer , String>();
+			Locator defLocator = null;
 			
 			for(Locator locator : locatorL){
 				locatorOpt.put(locator.getLocatorId(), locator.getLocatorKey());
+				if(locator.isDefaultLocator())
+					defLocator =locator; 
 			}
 			
 			PIDocLine piDocLine = new PIDocLine();
 			piDocLine.setPiDocId(piDoc.getPiDocId());
+			piDocLine.setLocator(defLocator);
+			piDocLine.setLocatorId(defLocator.getLocatorId());
 			
 			model.addObject("locatorL", locatorOpt);
 			model.addObject("piDocLineFrm", piDocLine);
@@ -209,9 +214,14 @@ public class PIDocController {
 		List<Locator> locatorL = warehouse.getLocatorL();
 		Map<Integer , String> locatorOpt = new HashMap<Integer , String>();
 		
+		Locator defLocator = null;
+		
 		for(Locator locator : locatorL){
 			locatorOpt.put(locator.getLocatorId(), locator.getLocatorKey());
+			if(locator.isDefaultLocator())
+				defLocator =locator; 
 		}
+		
 		// End Load Locator List
 		
 		if(isError){
@@ -228,6 +238,8 @@ public class PIDocController {
 			else{
 				PIDocLine line = new PIDocLine();
 				line.setPiDocId(piDocLineReq.getPiDocId());
+				line.setLocator(defLocator);
+				line.setLocatorId(defLocator.getLocatorId());
 				
 				model.addObject("locatorL", locatorOpt);
 				model.addObject("piDocLineFrm",line );

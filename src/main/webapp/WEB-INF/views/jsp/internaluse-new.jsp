@@ -19,6 +19,9 @@
 				<select name="locator" id="locator">
 					<c:forEach items="${locatorL}" var="locator">
 						<c:set var="locatorSelected" value=""/>
+						<c:if test="${locator.defaultLocator}" >
+							<c:set var="locatorSelected" value="selected"/>
+						</c:if>
 						<c:if test="${locator.locatorId == line.locator.locatorId}" >
 							<c:set var="locatorSelected" value="selected"/>
 						</c:if>
