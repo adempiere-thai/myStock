@@ -63,7 +63,7 @@ public class PIDocDaoImp extends AbstractDao implements PIDocDao {
 
 		StringBuffer sql = new StringBuffer(
 				"SELECT iv.M_Inventory_Id , iv.DocumentNo , iv.DocStatus , (SELECT COUNT(1) FROM M_InventoryLine ivl WHERE iv.M_Inventory_Id = ivl.M_Inventory_Id) as total_lines FROM M_Inventory iv \n");
-		sql.append("WHERE iv.AD_Client_Id = ? AND iv.AD_Org_ID = ? AND iv.DocumentNo = ? ");
+		sql.append("WHERE iv.AD_Client_Id = ? AND iv.AD_Org_ID = ? AND UPPER(iv.DocumentNo) = UPPER(?) ");
 
 		try {
 			conn = getConnection();
