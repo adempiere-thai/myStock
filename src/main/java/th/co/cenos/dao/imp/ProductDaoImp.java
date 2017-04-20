@@ -147,7 +147,7 @@ public class ProductDaoImp extends AbstractDao implements ProductDao {
 		ResultSet rset = null;
 		Product product = null;
 		StringBuffer productSQL = new StringBuffer(
-				"SELECT * FROM M_Product pd WHERE pd.AD_Client_ID = ? AND pd.value = ? ");
+				"SELECT * FROM M_Product pd WHERE pd.AD_Client_ID = ? AND UPPER(pd.value) = UPPER(?) ");
 
 		try {
 			conn = getConnection();
