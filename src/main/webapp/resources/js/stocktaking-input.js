@@ -4,7 +4,7 @@ $( document ).on( "pageinit", "#stocktaking-input", function() {
 		var schTxt = $(this).val();
 		console.log("schTxt "+schTxt);
 		
-		var url = '/myStock/findProductByKey';
+		var url = contextPath+'/findProductByKey';
 		var params = {srhKey: schTxt};
 		
 		$.getJSON(url, params, function (data) {
@@ -30,7 +30,7 @@ $( document ).on( "pageinit", "#stocktaking-input", function() {
 	$("#asiId").on("input", function(e) {
 		var schTxt = $(this).val();
 		
-		var url = '/myStock/findASIById';
+		var url = contextPath+'/findASIById';
 		var params = {asiId: schTxt};
 		
 		$.getJSON(url, params, function (data) {

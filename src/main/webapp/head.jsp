@@ -22,5 +22,7 @@
 	<!-- Javascript -->
 	<script src="${pageContext.request.contextPath}/resources/js/jquery-1.11.1.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/jquery.mobile-1.4.5.min.js"></script>
+	
+	<script>var contextPath = "${pageContext.request.contextPath}"</script>
 	<!-- End Javascript -->
 </head>

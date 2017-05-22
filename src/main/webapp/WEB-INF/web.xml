@@ -29,7 +29,7 @@
 	</filter-mapping>
 
 	<servlet>
-		<servlet-name>myStock2</servlet-name>
+		<servlet-name>myStock</servlet-name>
 		<servlet-class>th.co.cenos.web.AdempiereServlet</servlet-class>
 		<init-param>
 			<param-name>contextConfigLocation</param-name>
@@ -47,7 +47,7 @@
 	</servlet>
 
 	<servlet-mapping>
-		<servlet-name>myStock2</servlet-name>
+		<servlet-name>myStock</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
 </web-app>

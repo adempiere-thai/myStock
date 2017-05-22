@@ -35,14 +35,14 @@ $( document ).on( "pageinit", "#internaluse-detail", function() {
 		$('#completedMsg').hide();		
 		//$('#processing').popup('open');
 		
-		var url = '/myStock/internaluse/save?action=DR';
+		var url = contextPath+'/internaluse/save?action=DR';
 		
 		$.getJSON(url, function (data) {
 			console.log(data);
 			
 			if(data.indexOf("err") > -1){
 				// Error 
-				window.location.href = "/myStock/internaluse/detail?error="+data;
+				window.location.href = contextPath+"/internaluse/detail?error="+data;
 			}
 			else{
 				$('#docNo').text(data);
@@ -58,14 +58,14 @@ $( document ).on( "pageinit", "#internaluse-detail", function() {
 		$('#processingImg').show();
 		$('#completedMsg').hide();		
 		
-		var url = '/myStock/internaluse/save?action=CO';
+		var url = contextPath+'/internaluse/save?action=CO';
 		
 		$.getJSON(url, function (data) {
 			console.log(data);
 			
 			if(data.indexOf("err") > -1){
 				// Error 
-				window.location.href = "/myStock/internaluse/detail?error="+data;
+				window.location.href = contextPath+"/internaluse/detail?error="+data;
 			}
 			else{
 				$('#docNo').text(data);
